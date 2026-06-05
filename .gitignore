@@ -22,8 +22,20 @@ htmlcov/
 # Data & run outputs (keep empty dirs via .gitkeep)
 data/*
 !data/.gitkeep
+# Subject: tracked scaffolding only (clone lives under data/pysnooper-bugsinpy-1/src — ignored)
+!data/pysnooper-bugsinpy-1/
+data/pysnooper-bugsinpy-1/*
+!data/pysnooper-bugsinpy-1/SETUP.md
+# Isolated uv env for the subject (not graphdebug's lockfile)
+!data/pysnooper-subject-env/
+data/pysnooper-subject-env/*
+!data/pysnooper-subject-env/pyproject.toml
+!data/pysnooper-subject-env/uv.lock
+!data/pysnooper-subject-env/.python-version
+
 results/*
 !results/.gitkeep
+!results/baseline_red.txt
 
 # Jupyter
 .ipynb_checkpoints/

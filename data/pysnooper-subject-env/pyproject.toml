@@ -1,0 +1,13 @@
+[project]
+name = "pysnooper-subject-env"
+version = "0.1.0"
+description = "Isolated uv environment for the BugsInPy subject (PySnooper #1). Not merged into graphdebug."
+requires-python = ">=3.8,<3.9"
+dependencies = [
+  "pysnooper",
+  "pytest>=8,<9",
+  "python-toolbox",
+]
+
+[tool.uv.sources]
+pysnooper = { path = "../pysnooper-bugsinpy-1/src", editable = true }

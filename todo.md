@@ -178,36 +178,36 @@ pytest green; secrets safe. **❗Do not start Phase 1 until all P0 above are `[x
 **Entry Gate**: Phase 0 DoD met. **Exit Gate**: a failing test reproduced deterministically.
 
 ### 1.A Selection
-- [ ] **T1.1** (P0) Choose target per `prd §11` / ADR-6: **primary** = one light-dependency
+- [x] **T1.1** (P0) Choose target per `prd §11` / ADR-6: **primary** = one light-dependency
   BugsInPy bug from a medium, OOP-rich, pure-Python project; **fallback** = buggy-python.
   - **Refs**: assignment §2. **Deps**: T0.1.
   - **⚠ Critical**: vet dependencies **before** committing. Avoid heavy native builds on a
     free-tier/Windows timeline. If env setup will blow the time box, **switch to fallback
     now** (R1) — do not sink days into dependency hell.
-- [ ] **T1.2** (P0) Record selection + **justification** in README draft (assignment §2 hard
+- [x] **T1.2** (P0) Record selection + **justification** in README draft (assignment §2 hard
   requirement) and `obsidian/index.md`.
   - **DoD**: README has a "Why this repo/bug" section linking the bug id.
-- [ ] **T1.3** (P1) Capture bug metadata (project, bug id, symptom, failing test path,
+- [x] **T1.3** (P1) Capture bug metadata (project, bug id, symptom, failing test path,
   buggy/fixed refs) in `reports/bug_analysis.md` skeleton.
 
 ### 1.B Isolated environment
-- [ ] **T1.4** (P0) Stand up an **isolated env** for the target (uv-managed; conda/Docker only
+- [x] **T1.4** (P0) Stand up an **isolated env** for the target (uv-managed; conda/Docker only
   if the bug's pinned Python forces it). Keep target deps separate from `graphdebug`.
   - **Refs**: assignment §6.1, NFR-7, R1.
   - **⚠ Critical**: do **not** pollute `graphdebug`'s `pyproject.toml` with the target's
     deps. The target is a *subject under study*, not our dependency.
-- [ ] **T1.5** (P0) Check out the **buggy** version into `data/<target>/`; record commit ref.
-- [ ] **T1.6** (P1) Document exact setup commands in `data/<target>/SETUP.md` for reproducibility.
+- [x] **T1.5** (P0) Check out the **buggy** version into `data/<target>/`; record commit ref.
+- [x] **T1.6** (P1) Document exact setup commands in `data/<target>/SETUP.md` for reproducibility.
 
 ### 1.C Red baseline (the key gate of M0)
-- [ ] **T1.7** (P0) Run target test(s) → **confirm FAIL**; capture full output.
+- [x] **T1.7** (P0) Run target test(s) → **confirm FAIL**; capture full output.
   - **Refs**: FR-B1, RQ5, R5. **Deps**: T1.5.
   - **DoD**: failing output saved to `results/baseline_red.txt`.
   - **⚠ Critical**: if the test does not fail **reproducibly**, the entire downstream proof
     collapses. Re-run ≥2×; pin seeds. If still flaky, **change the bug now**, not in Phase 7.
-- [ ] **T1.8** (P0) Record observed **symptom** (exception/type/message/wrong output) in
+- [x] **T1.8** (P0) Record observed **symptom** (exception/type/message/wrong output) in
   `hot.md` and `bug_analysis.md`.
-- [ ] **T1.9** (P1) Locate the official fixed-version diff (ground truth) but **do not read it
+- [x] **T1.9** (P1) Locate the official fixed-version diff (ground truth) but **do not read it
   as the answer** — reserve it only to validate the agent's independent fix later.
   - **⚠ Critical**: peeking at the official patch and reverse-justifying it is self-deception.
     Keep the investigation honest; compare only at the end (Phase 7).

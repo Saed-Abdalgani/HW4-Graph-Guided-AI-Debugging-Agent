@@ -1,0 +1,54 @@
+﻿graphdebug - Phase 1 red baseline (BugsInPy PySnooper / bug 1)
+Captured: 2026-06-05 21:02:59 (local)
+Command: uv run pytest -vv ..\pysnooper-bugsinpy-1\src\tests\test_chinese.py::test_chinese
+CWD: data/pysnooper-subject-env
+Env: PYTHONHASHSEED=0; PYTHONUTF8 unset (Windows cp1252 repro)
+
+============================= test session starts =============================
+platform win32 -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- C:\Users\saedn\Desktop\AI Agents orchestration\HW\HW4-Graph-Guided AI Debugging Agent\data\pysnooper-subject-env\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\saedn\Desktop\AI Agents orchestration\HW\HW4-Graph-Guided AI Debugging Agent\data\pysnooper-bugsinpy-1\src
+configfile: tox.ini
+collecting ... collected 1 item
+
+..\pysnooper-bugsinpy-1\src\tests\test_chinese.py::test_chinese <- ..\tests\test_chinese.py FAILED [100%]
+
+================================== FAILURES ===================================
+________________________________ test_chinese _________________________________
+
+>   ???
+
+C:\Users\saedn\Desktop\AI Agents orchestration\HW\HW4-Graph-Guided AI Debugging Agent\data\pysnooper-bugsinpy-1\tests\test_chinese.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\pysnooper-bugsinpy-1\src\pysnooper\tracer.py:215: in simple_wrapper
+    return function(*args, **kwargs)
+C:\Users\saedn\Desktop\AI Agents orchestration\HW\HW4-Graph-Guided AI Debugging Agent\data\pysnooper-bugsinpy-1\tests\test_chinese.py:31: in foo
+    ???
+C:\Users\saedn\Desktop\AI Agents orchestration\HW\HW4-Graph-Guided AI Debugging Agent\data\pysnooper-bugsinpy-1\tests\test_chinese.py:31: in foo
+    ???
+..\pysnooper-bugsinpy-1\src\pysnooper\tracer.py:317: in trace
+    self.write('{indent}{newish_string}{name} = {value_repr}'.format(
+..\pysnooper-bugsinpy-1\src\pysnooper\tracer.py:242: in write
+    self._write(s)
+..\pysnooper-bugsinpy-1\src\pysnooper\tracer.py:134: in write
+    output_file.write(s)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <encodings.cp1252.IncrementalEncoder object at 0x000002499E593700>
+input = "New var:....... x = '\u5931\u8d25'\\r\\n", final = False
+
+    def encode(self, input, final=False):
+>       return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+E       UnicodeEncodeError: 'charmap' codec can't encode characters in position 21-22: character maps to <undefined>
+
+C:\Users\saedn\AppData\Roaming\uv\python\cpython-3.8-windows-x86_64-none\lib\encodings\cp1252.py:19: UnicodeEncodeError
+============================== warnings summary ===============================
+..\pysnooper-bugsinpy-1\src\pysnooper\variables.py:3
+..\pysnooper-bugsinpy-1\src\pysnooper\variables.py:3
+  C:\Users\saedn\Desktop\AI Agents orchestration\HW\HW4-Graph-Guided AI Debugging Agent\data\pysnooper-bugsinpy-1\src\pysnooper\variables.py:3: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import Mapping, Sequence
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED ..\pysnooper-bugsinpy-1\src\tests\test_chinese.py::test_chinese - UnicodeEncodeError: 'charmap' codec can't encode characters in position 21-22: character maps to <undefined>
+======================== 1 failed, 2 warnings in 0.17s ========================
