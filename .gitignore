@@ -1,0 +1,33 @@
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets & keys
+.env
+*.key
+*.pem
+
+# IDE
+.idea/
+.vscode/
+
+# Data & run outputs (keep empty dirs via .gitkeep)
+data/*
+!data/.gitkeep
+results/*
+!results/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

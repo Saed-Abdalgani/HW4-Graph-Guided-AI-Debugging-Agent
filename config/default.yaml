@@ -1,0 +1,38 @@
+# graphdebug — default configuration (no secrets; use .env for keys).
+
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  temperature: 0.0
+  max_output_tokens: 4096
+
+gatekeeper:
+  requests_per_minute: 60
+  tokens_per_minute: 90000
+  max_retries: 5
+  backoff_base_seconds: 0.5
+  max_backoff_seconds: 30.0
+  queue_size: 32
+
+budgets:
+  naive:
+    max_tokens: 100000
+    max_tool_calls: 200
+    max_files: 500
+    max_iterations: 50
+  graph:
+    max_tokens: 40000
+    max_tool_calls: 100
+    max_files: 30
+    max_iterations: 40
+
+paths:
+  graphify_artifacts: artifacts/graphify
+  obsidian_vault: obsidian
+  results: results
+  data_root: data
+  reports: reports
+
+features:
+  hitl_required: true
+  enable_langsmith: false

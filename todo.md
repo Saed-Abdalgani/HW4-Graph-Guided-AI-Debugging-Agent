@@ -1,4 +1,4 @@
-# TODO — Graph-Guided AI Debugging Agent (`graphdebug`)
+# TODO — Graph-Guided AI Debugging Agent (`graphdebug`)+
 
 > **HW4 — AI Agents Orchestration.** Execution checklist & quality gates.
 > Derived from [`prd.md`](./prd.md) and [`plan.md`](./plan.md).
@@ -42,15 +42,15 @@ Each task carries: **Refs** (requirements/plan), **Deps** (blocking task IDs),
 These are **non-negotiable**. Violations are blocking defects, not style nits.
 
 ### 1.1 Tooling
-- [ ] **G.1** (P0) Use **`uv` only**. No `pip`, `venv`, `virtualenv`, or bare `python -m`.
+- [x] **G.1** (P0) Use **`uv` only**. No `pip`, `venv`, `virtualenv`, or bare `python -m`.
   - **Refs**: system-prompt §Python tooling, `plan §15`.
   - **⚠ Critical**: a single `pip install` in docs/CI invalidates reproducibility. Grep the
     repo for `pip install` / `python -m venv` before submission and remove them.
-- [ ] **G.2** (P0) All deps added via `uv add`; `pyproject.toml` + `uv.lock` committed.
+- [x] **G.2** (P0) All deps added via `uv add`; `pyproject.toml` + `uv.lock` committed.
   - **⚠ Critical**: never hand-edit dependency versions; never commit without re-`uv lock`.
 
 ### 1.2 Architecture invariants
-- [ ] **G.3** (P0) **All business logic lives behind the SDK facade** (`sdk/api.py`).
+- [x] **G.3** (P0) **All business logic lives behind the SDK facade** (`sdk/api.py`).
   - **Refs**: FR-S1, ADR-4, `plan §5.1`.
   - **⚠ Critical**: CLI, LangGraph nodes, notebooks, and tests must import the SDK, never
     reach into `services/*` internals. Audit imports in Phase 10.
@@ -58,10 +58,10 @@ These are **non-negotiable**. Violations are blocking defects, not style nits.
   - **Refs**: FR-S2, ADR-5, `plan §5.7`.
   - **⚠ Critical**: a worker that calls the LLM SDK directly bypasses rate limits, retries,
     and the token ledger — which **breaks the token experiment's integrity**. Zero exceptions.
-- [ ] **G.5** (P0) **No hardcoded configurable values** (model names, URLs, timeouts, rate
+- [x] **G.5** (P0) **No hardcoded configurable values** (model names, URLs, timeouts, rate
   limits, paths, budgets, feature flags). All from `config/*.yaml` + `.env`.
   - **Refs**: NFR-4, system-prompt §Code quality.
-- [ ] **G.6** (P0) **One responsibility per module**; keep files **≤150 code lines** where
+- [x] **G.6** (P0) **One responsibility per module**; keep files **≤150 code lines** where
   practical; **no duplicated logic** (extract helpers/base classes).
   - **⚠ Critical**: if `supervisor.py` or `gatekeeper.py` grows past ~150 lines, split by
     responsibility *before* it becomes unmaintainable.
@@ -74,15 +74,15 @@ These are **non-negotiable**. Violations are blocking defects, not style nits.
 - [ ] **G.8** (P0) Update affected **existing tests**; do not leave them red or stale.
 
 ### 1.4 Security & secrets
-- [ ] **G.9** (P0) Secrets only in `.env`; commit `.env-example`; `.gitignore` covers `.env`,
+- [x] **G.9** (P0) Secrets only in `.env`; commit `.env-example`; `.gitignore` covers `.env`,
   `*.key`, `*.pem`, large `data/`, sensitive `results/`.
   - **Refs**: NFR-4, system-prompt §Security.
 - [ ] **G.10** (P0) Gatekeeper + loggers **redact** keys/tokens; no secrets in logs/ledgers.
   - **⚠ Critical**: ledgers are committed as evidence — scan them for leaked prompts/keys.
 
 ### 1.5 Quality gates (must stay green continuously)
-- [ ] **G.11** (P0) `uv run ruff check .` → **0 violations**.
-- [ ] **G.12** (P0) `uv run pytest --cov=src` → **≥85%** coverage on `src/`.
+- [x] **G.11** (P0) `uv run ruff check .` → **0 violations**.
+- [x] **G.12** (P0) `uv run pytest --cov=src` → **≥85%** coverage on `src/`.
   - **⚠ Critical**: 85% is a floor, not a target gamed by trivial tests. Cover failure paths,
     budget-cap breaches, gatekeeper retries, and graph-query edge cases — not just getters.
 - [ ] **G.13** (P1) Run G.11/G.12 before every commit; never commit on red.
@@ -112,60 +112,60 @@ These are **non-negotiable**. Violations are blocking defects, not style nits.
 **Entry Gate**: none (start here). **Exit Gate**: skeleton runs; Ruff clean; pytest collects.
 
 ### 0.A Project bootstrap
-- [ ] **T0.1** (P0) Initialize project with `uv init`; set Python version pin.
+- [x] **T0.1** (P0) Initialize project with `uv init`; set Python version pin.
   - **Refs**: `plan §15`, G.1. **Deps**: —.
   - **DoD**: `pyproject.toml` exists; `uv run python --version` prints pinned version.
   - **⚠ Critical**: confirm the pinned interpreter is available on Windows dev env *and*
     compatible with LangGraph + the chosen LLM SDK before going further.
-- [ ] **T0.2** (P0) Create full directory tree from `plan §3`.
+- [x] **T0.2** (P0) Create full directory tree from `plan §3`.
   - **DoD**: tree matches `plan §3`; each package has `__init__.py`.
   - **⚠ Critical**: empty dirs are not tracked by Git — add `.gitkeep` to `results/`,
     `data/`, `artifacts/graphify/`, `assets/` so structure survives a fresh clone.
-- [ ] **T0.3** (P0) Add `version.py` (single version source) and `constants.py`
+- [x] **T0.3** (P0) Add `version.py` (single version source) and `constants.py`
   (non-config constants only — NOT tunables).
   - **Refs**: `plan §5.7`. **⚠ Critical**: do not let `constants.py` absorb things that
     belong in `config/` (model names, limits). That violates G.5.
 
 ### 0.B Dependencies
-- [ ] **T0.4** (P0) Add runtime deps via `uv add`: `langgraph`, `langchain-core`, the chosen
+- [x] **T0.4** (P0) Add runtime deps via `uv add`: `langgraph`, `langchain-core`, the chosen
   provider SDK, `networkx`, `pyyaml`, `python-dotenv`.
   - **DoD**: `uv.lock` updated; `uv sync` clean.
   - **⚠ Critical**: pick exactly **one** LLM provider now (ADR-1). Two SDKs double surface
     area and complicate the Gatekeeper.
-- [ ] **T0.5** (P0) Add dev deps: `pytest`, `pytest-cov`, `ruff` (+ `pytest-mock` if used).
+- [x] **T0.5** (P0) Add dev deps: `pytest`, `pytest-cov`, `ruff` (+ `pytest-mock` if used).
   - **DoD**: `uv run pytest`, `uv run ruff check .` both execute.
-- [ ] **T0.6** (P1) Add experiment deps in an optional/dev group: `matplotlib`, `ipykernel`.
+- [x] **T0.6** (P1) Add experiment deps in an optional/dev group: `matplotlib`, `ipykernel`.
   - **⚠ Critical**: keep these optional so the core install stays lean.
 
 ### 0.C Config & secrets scaffolding
-- [ ] **T0.7** (P0) Create `config/default.yaml`: model name(s), gatekeeper rate limits
+- [x] **T0.7** (P0) Create `config/default.yaml`: model name(s), gatekeeper rate limits
   (RPM/TPM), retry/backoff params, **budget caps** (`max_tokens`, `max_tool_calls`,
   `max_files`, `max_iterations`), paths, feature flags.
   - **Refs**: FR-A5, FR-S2, G.5.
   - **⚠ Critical**: define separate budget profiles for **naive** vs **graph** arms so the
     experiment is controlled and reproducible (`plan §12`).
-- [ ] **T0.8** (P0) Implement `shared/config.py` loader (yaml + `.env` overlay, typed access,
+- [x] **T0.8** (P0) Implement `shared/config.py` loader (yaml + `.env` overlay, typed access,
   validation, clear errors on missing keys).
   - **DoD**: unit test loads config and rejects missing required keys.
   - **⚠ Critical**: fail **loudly** on missing/invalid config; silent defaults hide cost bugs.
-- [ ] **T0.9** (P0) Create `.env-example` (key var names, no real values) and local,
+- [x] **T0.9** (P0) Create `.env-example` (key var names, no real values) and local,
   gitignored `.env`.
   - **Refs**: G.9. **DoD**: `.env` in `.gitignore`; `.env-example` committed.
-- [ ] **T0.10** (P0) Write `.gitignore` (`.env`, `__pycache__`, `.venv`, `*.key`, `*.pem`,
+- [x] **T0.10** (P0) Write `.gitignore` (`.env`, `__pycache__`, `.venv`, `*.key`, `*.pem`,
   large `data/`, raw `results/`, notebook checkpoints).
 
 ### 0.D Per-mechanism PRDs & docs stubs
-- [ ] **T0.11** (P1) Create `docs/PRD_multiagent.md` (state, nodes, routing, budget) stub.
+- [x] **T0.11** (P1) Create `docs/PRD_multiagent.md` (state, nodes, routing, budget) stub.
   - **Refs**: system-prompt §Mandatory docs, `plan §5.4`.
-- [ ] **T0.12** (P1) Create `docs/PRD_token_ledger.md` (schema, aggregation, redaction) stub.
-- [ ] **T0.13** (P1) Decide doc home: keep `prd/plan/todo.md` at root and mirror into `docs/`
+- [x] **T0.12** (P1) Create `docs/PRD_token_ledger.md` (schema, aggregation, redaction) stub.
+- [x] **T0.13** (P1) Decide doc home: keep `prd/plan/todo.md` at root and mirror into `docs/`
   to satisfy the system-prompt `docs/` layout.
   - **⚠ Critical**: pick **one** canonical copy to edit; stale duplicates mislead reviewers.
 
 ### 0.E Sanity skeleton
-- [ ] **T0.14** (P0) Add trivial `sdk/api.py` + `version.py` smoke test so coverage runs.
+- [x] **T0.14** (P0) Add trivial `sdk/api.py` + `version.py` smoke test so coverage runs.
   - **DoD**: `uv run pytest` green with ≥1 test; `uv run ruff check .` = 0.
-- [ ] **T0.15** (P1) Add CLI entrypoint stub (`graphdebug --help`) wired to SDK (no logic).
+- [x] **T0.15** (P1) Add CLI entrypoint stub (`graphdebug --help`) wired to SDK (no logic).
   - **Refs**: FR-S3, G.3.
 
 **Phase 0 DoD**: structure (`plan §3`) present; `uv.lock` committed; config loads; Ruff 0;
