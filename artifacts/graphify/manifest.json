@@ -1,0 +1,72 @@
+{
+  "pysnooper/__init__.py": {
+    "mtime": 1780682168.5063386,
+    "ast_hash": "a2ae13a30ef1ecdc6fc1cace06121e2f",
+    "semantic_hash": "a2ae13a30ef1ecdc6fc1cace06121e2f"
+  },
+  "pysnooper/pycompat.py": {
+    "mtime": 1780682168.5076463,
+    "ast_hash": "18a4488b456854a7ef9e678f6e3c21d6",
+    "semantic_hash": "18a4488b456854a7ef9e678f6e3c21d6"
+  },
+  "pysnooper/tracer.py": {
+    "mtime": 1780682168.5097847,
+    "ast_hash": "bf10a0cc871b25edae0d41d2b5339170",
+    "semantic_hash": "bf10a0cc871b25edae0d41d2b5339170"
+  },
+  "pysnooper/utils.py": {
+    "mtime": 1780682168.5112572,
+    "ast_hash": "b3e1626b2daefd4bd6732bcd561971a6",
+    "semantic_hash": "b3e1626b2daefd4bd6732bcd561971a6"
+  },
+  "pysnooper/variables.py": {
+    "mtime": 1780682168.513243,
+    "ast_hash": "9d15190124e65520548c2f73a449d9ce",
+    "semantic_hash": "9d15190124e65520548c2f73a449d9ce"
+  },
+  "setup.py": {
+    "mtime": 1780682168.5151887,
+    "ast_hash": "6353a21a00d588888323a922bb1e15a7",
+    "semantic_hash": "6353a21a00d588888323a922bb1e15a7"
+  },
+  "tests/__init__.py": {
+    "mtime": 1780682153.5807743,
+    "ast_hash": "0847181dff43b0257f102382ba3d6c78",
+    "semantic_hash": "0847181dff43b0257f102382ba3d6c78"
+  },
+  "tests/samples/__init__.py": {
+    "mtime": 1780682153.58481,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "tests/samples/exception.py": {
+    "mtime": 1780682168.5151887,
+    "ast_hash": "5f9da16006e78b04d3057cfb6272d87a",
+    "semantic_hash": "5f9da16006e78b04d3057cfb6272d87a"
+  },
+  "tests/samples/indentation.py": {
+    "mtime": 1780682168.5171974,
+    "ast_hash": "724f75f06d37727e6c5d951fd26da4bd",
+    "semantic_hash": "724f75f06d37727e6c5d951fd26da4bd"
+  },
+  "tests/samples/recursion.py": {
+    "mtime": 1780682168.5192072,
+    "ast_hash": "3a1eb0c11a731688bd31cd66e5080d86",
+    "semantic_hash": "3a1eb0c11a731688bd31cd66e5080d86"
+  },
+  "tests/test_chinese.py": {
+    "mtime": 1780682339.9791236,
+    "ast_hash": "283d92ef7d921855a94316c4a2c173c2",
+    "semantic_hash": "283d92ef7d921855a94316c4a2c173c2"
+  },
+  "tests/test_pysnooper.py": {
+    "mtime": 1780682168.5203896,
+    "ast_hash": "6753f42910091b8969409426736ba679",
+    "semantic_hash": "6753f42910091b8969409426736ba679"
+  },
+  "tests/utils.py": {
+    "mtime": 1780682168.5216074,
+    "ast_hash": "d931021f12d6dc2db3fb4258871abda6",
+    "semantic_hash": "d931021f12d6dc2db3fb4258871abda6"
+  }
+}

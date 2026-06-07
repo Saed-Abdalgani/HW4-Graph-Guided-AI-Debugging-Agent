@@ -222,32 +222,32 @@ deterministically**; symptom documented. **❗No Graphify run until red is prove
 **Entry Gate**: red baseline proven (Phase 1). **Exit Gate**: `graph.json` parses; report opens.
 
 ### 2.A Run Graphify
-- [ ] **T2.1** (P0) Run Graphify on the target repo with `--obsidian`.
+- [x] **T2.1** (P0) Run Graphify on the target repo with `--obsidian`.
   - **Refs**: FR-G1, FR-G2, `plan §8`. **Deps**: T1.5.
   - **DoD**: `graph.html`, `GRAPH_REPORT.md`, `graph.json`, vault produced.
   - **⚠ Critical**: Graphify itself consumes tokens (LLM semantic pass). Run it **once**,
     on the right scope. Scoping the whole monorepo when the bug lives in one package wastes
     budget and dilutes the graph — point it at the relevant subtree if possible.
-- [ ] **T2.2** (P0) Persist outputs to `artifacts/graphify/` (immutable artifacts).
+- [x] **T2.2** (P0) Persist outputs to `artifacts/graphify/` (immutable artifacts).
   - **Refs**: FR-G3. **DoD**: files committed; not regenerated per query.
-- [ ] **T2.3** (P1) Record exact Graphify version + command + scope in
+- [x] **T2.3** (P1) Record exact Graphify version + command + scope in
   `artifacts/graphify/RUN.md`.
   - **⚠ Critical**: without this, the graph is not reproducible and RQ7 evidence is weak.
 
 ### 2.B Validate & load the graph
-- [ ] **T2.4** (P0) Implement `services/graphify/loader.py`: parse `graph.json` → typed
+- [x] **T2.4** (P0) Implement `services/graphify/loader.py`: parse `graph.json` → typed
   `CodeGraph` (nodes/edges/clusters/metadata).
   - **Refs**: FR-G4, `plan §5.2`, `plan §6.2`. **Deps**: T2.2.
   - **DoD**: unit test parses the real `graph.json` into typed objects.
   - **⚠ Critical**: do **not** assume Graphify's schema — inspect the actual `graph.json`
     keys/edge-relation vocabulary first and write the loader against reality, with a clear
     error if the schema differs from expectation.
-- [ ] **T2.5** (P0) Implement `services/graphify/query.py`: neighbors, hop traversal,
+- [x] **T2.5** (P0) Implement `services/graphify/query.py`: neighbors, hop traversal,
   path-between-nodes, edge detail — **without reading source files**.
   - **Refs**: `plan §5.2`, `plan §8`. **DoD**: unit tests on a fixture graph.
   - **⚠ Critical**: this module is the heart of the token-saving thesis. If any query path
     secretly falls back to reading source, the experiment is invalidated (see G.4 analogue).
-- [ ] **T2.6** (P1) Sanity-check the graph: node/edge counts, dangling edges, isolated nodes.
+- [x] **T2.6** (P1) Sanity-check the graph: node/edge counts, dangling edges, isolated nodes.
   - **DoD**: a short `reports/graph_sanity.md` note.
 
 **Phase 2 DoD**: Graphify artifacts committed under `artifacts/graphify/`; loader + query

@@ -18,6 +18,8 @@
 
 - [x] Red baseline reproduced (subject `uv` env, **not** `graphdebug` root env).
 - [x] Confirmed **deterministic** failure class across immediate re-runs with `PYTHONHASHSEED=0` and UTF-8 mode **unset**.
+- [x] Phase 2 graph produced under `artifacts/graphify/` with `graph.json`, `graph.html`, `GRAPH_REPORT.md`, and Graphify's exported Obsidian vault.
+- [x] Loader/query SDK validates the graph without reading source files: 149 unique node ids, 462 edges, 46 dangling external-reference edges, 1 isolated node.
 
 ## Root cause
 
@@ -29,4 +31,4 @@ _TBD._
 
 ## Next action
 
-- Phase 2: run Graphify on `data/pysnooper-bugsinpy-1/src` (scoped), persist under `artifacts/graphify/`.
+- Phase 3: build the project Obsidian vault pages from the persisted graph and seed navigation around `tests_test_chinese_test_chinese`, `pysnooper_tracer_filewriter`, and `pysnooper_tracer_filewriter_write`.
