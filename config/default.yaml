@@ -33,6 +33,15 @@ paths:
   data_root: data
   reports: reports
 
+analysis:
+  source_prefixes:
+    - "pysnooper/"
+    - "tests/"
+  god_top_k: 8
+  god_percentile: 92.0
+  louvain_seed: 42
+  louvain_resolution: 1.15
+
 features:
   hitl_required: true
   enable_langsmith: false

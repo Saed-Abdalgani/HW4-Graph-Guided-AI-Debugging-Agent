@@ -5,6 +5,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from pathlib import Path
 
+from graphdebug.services.analysis import (
+    CentralityRow,
+    GodNode,
+    Phase4ExportResult,
+    export_phase4,
+)
 from graphdebug.services.graphify import (
     CodeGraph,
     GraphEdge,
@@ -52,6 +58,15 @@ def build_project_vault(
     return result
 
 
+def export_project_phase4(
+    config: AppConfig,
+    *,
+    graph_path: Path | None = None,
+) -> Phase4ExportResult:
+    """Centrality, god-node markdown, and graph-derived architecture / OOP assets."""
+    return export_phase4(config, graph_path=graph_path)
+
+
 def update_hot(path: str | Path, sections: dict[str, str]) -> str:
     """Merge *sections* into ``hot.md``; keys match ``HOT_SECTION_KEYS``."""
     return write_hot_sections(Path(path), sections)
@@ -59,18 +74,23 @@ def update_hot(path: str | Path, sections: dict[str, str]) -> str:
 
 __all__ = [
     "AppConfig",
+    "CentralityRow",
     "CodeGraph",
     "ConfigError",
+    "GodNode",
     "GraphEdge",
     "GraphLoadError",
     "GraphNode",
     "GraphQueryError",
     "GraphSanity",
+    "Phase4ExportResult",
     "VaultBuildResult",
     "build_project_vault",
     "build_vault",
     "capture_knowledge_snapshot",
     "edge_details",
+    "export_phase4",
+    "export_project_phase4",
     "get_version",
     "graph_sanity",
     "load_code_graph",

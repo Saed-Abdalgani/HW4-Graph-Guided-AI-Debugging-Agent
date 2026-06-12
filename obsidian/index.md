@@ -7,7 +7,7 @@
 - **Live scratchpad:** [[hot]]
 - **Graph narrative (Graphify copy):** [[GRAPH_REPORT]]
 - **Architecture (stub → Phase 4 diagrams):** [[Architecture]]
-- **God nodes (stub → Phase 4 metrics):** [[God nodes]]
+- **God nodes (Phase 4 metrics):** [[God nodes]]
 - **Suspect hub:** [[suspects/FileWriter encoding|FileWriter encoding]]
 - **Seeded finding:** [[findings/UTF-8 log path|UTF-8 log path]]
 

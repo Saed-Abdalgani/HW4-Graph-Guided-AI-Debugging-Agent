@@ -10,6 +10,7 @@ dependencies = [
     "langchain-core>=1.4.1",
     "langchain-openai>=1.2.2",
     "langgraph>=1.2.4",
+    "matplotlib>=3.10.9",
     "networkx>=3.6.1",
     "python-dotenv>=1.2.2",
     "pyyaml>=6.0.3",
@@ -31,7 +32,6 @@ dev = [
 ]
 experiment = [
     "ipykernel>=7.2.0",
-    "matplotlib>=3.10.9",
 ]
 
 [tool.ruff]

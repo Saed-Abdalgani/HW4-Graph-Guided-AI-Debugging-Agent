@@ -1,0 +1,56 @@
+flowchart LR
+  _0["B0 (n=22) — __init__.py, tracer.py, var…"]
+  _1["B1 (n=2) — variables.py"]
+  _2["B2 (n=5) — variables.py"]
+  _3["B3 (n=6) — exception.py, test_chinese.p…"]
+  _4["B4 (n=6) — indentation.py"]
+  _5["B5 (n=4) — recursion.py"]
+  _6["B6 (n=22) — pycompat.py, test_chinese.p…"]
+  _7["B7 (n=28) — test_pysnooper.py, utils.py"]
+  _8["B8 (n=8) — test_pysnooper.py, utils.py,…"]
+  _9["B9 (n=4) — utils.py"]
+  _10["B10 (n=6) — utils.py"]
+  _11["B11 (n=2) — utils.py"]
+  _12["B12 (n=3) — utils.py"]
+  _13["B13 (n=1) — pycompat.py"]
+  _14["B14 (n=1) — pycompat.py"]
+  _15["B15 (n=1) — tracer.py"]
+  _16["B16 (n=1) — tracer.py"]
+  _17["B17 (n=1) — tracer.py"]
+  _18["B18 (n=1) — tracer.py"]
+  _19["B19 (n=1) — utils.py"]
+  _20["B20 (n=1) — variables.py"]
+  _21["B21 (n=1) — variables.py"]
+  _22["B22 (n=1) — variables.py"]
+  _23["B23 (n=1) — variables.py"]
+  _24["B24 (n=1) — variables.py"]
+  _25["B25 (n=1) — variables.py"]
+  _26["B26 (n=1) — variables.py"]
+  _27["B27 (n=1) — variables.py"]
+  _28["B28 (n=1) — __init__.py"]
+  _29["B29 (n=1) — __init__.py"]
+  _30["B30 (n=1) — utils.py"]
+  _31["B31 (n=1) — utils.py"]
+  _32["B32 (n=1) — utils.py"]
+  _33["B33 (n=1) — utils.py"]
+  _34["B34 (n=1) — utils.py"]
+  _35["B35 (n=1) — utils.py"]
+  _7 -->|contains| _8
+  _3 -->|calls| _7
+  _6 -->|contains| _7
+  _6 -->|imports| _7
+  _7 -->|imports| _8
+  _0 -->|imports_from| _6
+  _6 -->|imports| _8
+  _6 -->|imports_from| _8
+  _6 -->|contains| _8
+  _0 -->|imports| _6
+  _0 -->|contains| _8
+  _3 -->|contains| _6
+  _0 -->|imports_from| _8
+  _3 -->|contains| _8
+  _6 -->|calls| _7
+  _7 -->|calls| _12
+  _4 -->|imports_from| _8
+  _5 -->|imports_from| _8
+  _3 -->|imports_from| _8

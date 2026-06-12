@@ -1,0 +1,99 @@
+flowchart TB
+  N0["object"]
+  N1["pycompat.py"]
+  N2["ABC"]
+  N3["PathLike"]
+  N4[".__fspath__()"]
+  N5[".__subclasshook__()"]
+  N6["tracer.py"]
+  N7["FileWriter"]
+  N8[".__init__()"]
+  N9[".write()"]
+  N10["get_local_reprs()"]
+  N11["get_source_from_fram…"]
+  N12["get_write_function()"]
+  N13["Tracer"]
+  N14[".__call__()"]
+  N15[".__enter__()"]
+  N16[".__exit__()"]
+  N17[".__init__()"]
+  N18["._is_internal_frame()"]
+  N19[".set_thread_info_pad…"]
+  N20[".trace()"]
+  N21[".write()"]
+  N22["UnavailableSource"]
+  N23[".__getitem__()"]
+  N24["utils.py"]
+  N25["_check_methods()"]
+  N26["ensure_tuple()"]
+  N27["get_shortish_repr()"]
+  N28["shitcode()"]
+  N29["truncate()"]
+  N30["WritableStream"]
+  N31[".__subclasshook__()"]
+  N32[".write()"]
+  N33["variables.py"]
+  N34["Attrs"]
+  N35["BaseVariable"]
+  N36[".__init__()"]
+  N37[".items()"]
+  N38["CommonVariable"]
+  N39["._format_key()"]
+  N40["._get_value()"]
+  N41["._items()"]
+  N42["._keys()"]
+  N43["._safe_keys()"]
+  N44["Exploding"]
+  N45["Indices"]
+  N46["Keys"]
+  N47["needs_parentheses()"]
+  N35 -->|method| N37
+  N30 -->|inherits| N2
+  N1 -->|contains| N2
+  N1 -->|contains| N3
+  N2 -->|inherits| N0
+  N3 -->|inherits| N2
+  N3 -->|method| N4
+  N3 -->|method| N5
+  N6 -->|contains| N10
+  N6 -->|contains| N22
+  N6 -->|contains| N11
+  N6 -->|contains| N12
+  N6 -->|contains| N7
+  N6 -->|contains| N13
+  N22 -->|inherits| N0
+  N22 -->|method| N23
+  N7 -->|inherits| N0
+  N7 -->|method| N8
+  N7 -->|method| N9
+  N13 -->|method| N17
+  N13 -->|method| N14
+  N13 -->|method| N21
+  N13 -->|method| N15
+  N13 -->|method| N16
+  N13 -->|method| N18
+  N13 -->|method| N19
+  N13 -->|method| N20
+  N24 -->|contains| N25
+  N24 -->|contains| N30
+  N24 -->|contains| N28
+  N24 -->|contains| N27
+  N24 -->|contains| N29
+  N24 -->|contains| N26
+  N30 -->|method| N32
+  N30 -->|method| N31
+  N33 -->|contains| N47
+  N33 -->|contains| N35
+  N33 -->|contains| N38
+  N33 -->|contains| N34
+  N33 -->|contains| N46
+  N33 -->|contains| N45
+  N33 -->|contains| N44
+  N35 -->|method| N36
+  N38 -->|inherits| N35
+  N38 -->|method| N41
+  N38 -->|method| N43
+  N38 -->|method| N42
+  N38 -->|method| N39
+  N38 -->|method| N40
+  N34 -->|inherits| N38

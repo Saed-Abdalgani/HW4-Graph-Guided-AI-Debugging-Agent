@@ -38,4 +38,23 @@ uv run graphdebug vault-build
 uv run graphdebug vault-build --snapshot   # optional: results/knowledge_snapshots/before/
 ```
 
+Phase 4 (centrality, god-node report, diagrams): from the repo root:
+
+```bash
+uv run graphdebug phase4-export
+```
+
+This writes `reports/god_nodes.md`, `reports/architecture.md`, `obsidian/God nodes.md`, and
+`assets/architecture.png` / `assets/oop.png` (plus `.mmd` sources).
+
+## Architecture diagrams (Phase 4)
+
+Subsystem blocks are derived from **graph topology** (Louvain communities on structural edges),
+not from the directory tree. The OOP diagram uses the **inherits / contains / uses / method**
+slice of `graph.json`. See `reports/architecture.md` for RQ1 / RQ4 narrative.
+
+![Architecture block diagram](assets/architecture.png)
+
+![OOP structure slice](assets/oop.png)
+
 Authoritative checklists and requirements: see `prd.md`, `plan.md`, and `todo.md` at the repo root.

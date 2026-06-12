@@ -5,6 +5,14 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from graphdebug.cli_handlers import (
+    print_graphify_summary,
+    run_phase4_export,
+    run_vault_build,
+    run_vault_snapshot,
+    version_string,
+)
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -14,7 +22,7 @@ def main() -> None:
     parser.add_argument(
         "--version",
         action="version",
-        version=_version_string(),
+        version=version_string(),
     )
     subparsers = parser.add_subparsers(dest="command")
     graphify_load = subparsers.add_parser(
@@ -59,77 +67,31 @@ def main() -> None:
         default=None,
         help="Repo root (default: current working directory).",
     )
+    phase4 = subparsers.add_parser(
+        "phase4-export",
+        help="Centrality, god-node reports, architecture + OOP diagrams (Phase 4).",
+    )
+    phase4.add_argument(
+        "--project-root",
+        type=Path,
+        default=None,
+        help="Repo root (default: current working directory).",
+    )
+    phase4.add_argument(
+        "--graph",
+        type=Path,
+        default=None,
+        help="Override path to graph.json.",
+    )
     args = parser.parse_args()
     if args.command == "graphify-load":
-        _print_graphify_summary(args.graph_path)
+        print_graphify_summary(args.graph_path)
     elif args.command == "vault-build":
-        _run_vault_build(args)
+        run_vault_build(args)
     elif args.command == "vault-snapshot":
-        _run_vault_snapshot(args)
-
-
-def _version_string() -> str:
-    from graphdebug.sdk.api import get_version
-
-    return get_version()
-
-
-def _print_graphify_summary(path: Path) -> None:
-    from graphdebug.sdk.api import graph_sanity, load_code_graph
-
-    graph = load_code_graph(path)
-    sanity = graph_sanity(graph)
-    print(
-        " ".join(
-            (
-                f"nodes={sanity.node_count}",
-                f"edges={sanity.edge_count}",
-                f"hyperedges={sanity.hyperedge_count}",
-                f"dangling={len(sanity.dangling_edges)}",
-                f"isolated={len(sanity.isolated_node_ids)}",
-            )
-        )
-    )
-
-
-def _run_vault_build(args: argparse.Namespace) -> None:
-    from graphdebug.sdk.api import (
-        build_project_vault,
-        build_vault,
-        capture_knowledge_snapshot,
-        load_code_graph,
-        load_config,
-    )
-
-    root = (args.project_root or Path.cwd()).resolve()
-    config = load_config(project_root=root, require_api_key=False)
-    if args.graph is not None:
-        graph = load_code_graph(args.graph)
-        result = build_vault(graph, config.paths["obsidian_vault"])
-        if args.snapshot:
-            capture_knowledge_snapshot(
-                config.paths["obsidian_vault"],
-                config.paths["results"],
-            )
-    else:
-        result = build_project_vault(config, capture_snapshot=args.snapshot)
-    print(
-        "vault-build:",
-        f"graph_pages={len(result.graph_pages)}",
-        f"suspects={len(result.suspect_pages)}",
-        f"findings={len(result.finding_pages)}",
-        f"stubs={len(result.stubs)}",
-        f"graph_report={'yes' if result.graph_report_copy else 'no'}",
-    )
-
-
-def _run_vault_snapshot(args: argparse.Namespace) -> None:
-    from graphdebug.sdk.api import capture_knowledge_snapshot, load_config
-
-    root = (args.project_root or Path.cwd()).resolve()
-    config = load_config(project_root=root, require_api_key=False)
-    dest = capture_knowledge_snapshot(config.paths["obsidian_vault"], config.paths["results"])
-    print(f"vault-snapshot: wrote {dest}")
+        run_vault_snapshot(args)
+    elif args.command == "phase4-export":
+        run_phase4_export(args)
 
 
 if __name__ == "__main__":

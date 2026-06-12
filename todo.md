@@ -297,29 +297,29 @@ captured; vault generation exposed via SDK.
 **Entry Gate**: graph + vault exist (Phases 2–3). **Exit Gate**: block + OOP diagrams committed.
 
 ### 4.A Centrality & complexity analysis
-- [ ] **T4.1** (P0) Implement `services/analysis/` centrality (degree/betweenness/closeness)
+- [x] **T4.1** (P0) Implement `services/analysis/` centrality (degree/betweenness/closeness)
   over `CodeGraph` (NetworkX).
   - **Refs**: FR-R3, RQ2, `plan §5.2`, `plan §10`. **Deps**: T2.4.
   - **DoD**: ranked node list with scores; unit-tested on a fixture graph.
-- [ ] **T4.2** (P0) Identify **God Nodes** / complexity centers; write `reports/god_nodes.md`
+- [x] **T4.2** (P0) Identify **God Nodes** / complexity centers; write `reports/god_nodes.md`
   + an Obsidian page.
   - **Refs**: RQ3. **DoD**: each God-node backed by a centrality number + a one-line "why".
   - **⚠ Critical**: "God-node" must be **evidence-backed** (high centrality / mixed
     responsibility), not a vibe. State the metric and threshold you used.
 
 ### 4.B Diagrams (derived from the graph, NOT folders)
-- [ ] **T4.3** (P0) Produce the **architecture block diagram** by collapsing nodes into
+- [x] **T4.3** (P0) Produce the **architecture block diagram** by collapsing nodes into
   clusters/subsystems and drawing their real edges (imports/calls).
   - **Refs**: FR-R1, RQ1, RQ4, `plan §10`, `plan §11`. **DoD**: `assets/architecture.*`.
   - **⚠ Critical**: the assignment explicitly forbids relying on folder structure/file names.
     If your block diagram mirrors the directory tree, you have **not** done reverse
     engineering — derive it from graph relationships and justify each block.
-- [ ] **T4.4** (P0) Produce the **OOP diagram** from `class` nodes + `inherits`/`contains`/
+- [x] **T4.4** (P0) Produce the **OOP diagram** from `class` nodes + `inherits`/`contains`/
   `uses` edges (inheritance, composition, usage, wrappers).
   - **Refs**: FR-R2, RQ4. **DoD**: `assets/oop.*`.
   - **⚠ Critical**: validate a few relationships against actual code (budgeted reads) — LLM
     semantic edges can hallucinate inheritance. A wrong OOP diagram is worse than none.
-- [ ] **T4.5** (P1) Write `reports/architecture.md` answering RQ1 & RQ4 (what surprised you;
+- [x] **T4.5** (P1) Write `reports/architecture.md` answering RQ1 & RQ4 (what surprised you;
   how diagrams were extracted from poor docs).
   - **⚠ Critical**: explicitly state **what was NOT clear at first glance** and what the
     graph revealed — that contrast is the graded insight, not the diagram alone.
