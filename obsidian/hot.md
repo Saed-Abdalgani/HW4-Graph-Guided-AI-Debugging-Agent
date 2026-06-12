@@ -20,6 +20,7 @@
 - [x] Confirmed **deterministic** failure class across immediate re-runs with `PYTHONHASHSEED=0` and UTF-8 mode **unset**.
 - [x] Phase 2 graph produced under `artifacts/graphify/` with `graph.json`, `graph.html`, `GRAPH_REPORT.md`, and Graphify's exported Obsidian vault.
 - [x] Loader/query SDK validates the graph without reading source files: 149 unique node ids, 462 edges, 46 dangling external-reference edges, 1 isolated node.
+- [x] Phase 3 project vault: `vault-build` materializes `generated/`, `suspects/`, `findings/`, stubs, and in-vault `GRAPH_REPORT.md` (see [[index]]).
 
 ## Root cause
 
@@ -31,4 +32,5 @@ _TBD._
 
 ## Next action
 
-- Phase 3: build the project Obsidian vault pages from the persisted graph and seed navigation around `tests_test_chinese_test_chinese`, `pysnooper_tracer_filewriter`, and `pysnooper_tracer_filewriter_write`.
+- After any Graphify re-run: `uv run graphdebug vault-build` then refresh [[hot]] + suspect/finding notes.
+- Phase 4: centrality + god-node report + architecture diagrams (`reports/god_nodes.md`, `assets/`).

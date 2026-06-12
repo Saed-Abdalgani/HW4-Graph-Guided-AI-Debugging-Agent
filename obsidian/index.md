@@ -1,25 +1,30 @@
 # graphdebug vault — index
 
-> **HW4** graph-guided debugging. Phase 1 target: **BugsInPy — PySnooper bug 1** (UTF-8 / non-ASCII snoop output).
+> **HW4** graph-guided debugging. Target: **BugsInPy — PySnooper bug 1** (UTF-8 / non-ASCII snoop output).
 
-## Working set
+## Start here
 
-- **Subject layout**: `data/pysnooper-bugsinpy-1/SETUP.md` (clone + `uv` commands).
-- **Isolated test env**: `data/pysnooper-subject-env/` (separate `uv.lock`; not merged into `graphdebug`).
-- **Baseline evidence**: `results/baseline_red.txt`
-- **Structured metadata**: `reports/bug_analysis.md`
-- **Live investigation scratchpad**: [[hot]]
+- **Live scratchpad:** [[hot]]
+- **Graph narrative (Graphify copy):** [[GRAPH_REPORT]]
+- **Architecture (stub → Phase 4 diagrams):** [[Architecture]]
+- **God nodes (stub → Phase 4 metrics):** [[God nodes]]
+- **Suspect hub:** [[suspects/FileWriter encoding|FileWriter encoding]]
+- **Seeded finding:** [[findings/UTF-8 log path|UTF-8 log path]]
 
-## Navigation (upcoming phases)
+## Bug-1 graph focus (generated)
 
-| Phase | Artifact |
-|-------|-----------|
-| 2 | `artifacts/graphify/` (`graph.json`, report, vault export) |
-| 3 | Component / suspect pages (vault builder) |
-| 4 | `assets/` diagrams + `reports/architecture.md` |
-| 5–6 | LangGraph run logs + hypothesis in `reports/bug_analysis.md` |
+- [[generated/pysnooper_tracer_filewriter|FileWriter (`pysnooper_tracer_filewriter`)]]
+- [[generated/pysnooper_tracer_filewriter_write|`.write()` (`pysnooper_tracer_filewriter_write`)]]
+- [[generated/tests_test_chinese|Test module (`tests_test_chinese`)]]
+- [[generated/tests_test_chinese_test_chinese|Failing test (`tests_test_chinese_test_chinese`)]]
 
-## Requirements map (quick)
+## Repo paths (outside Obsidian)
 
-- **Selection / justification**: root `README.md` § “Target repository & bug”.
-- **RQ5** (how found / root cause): `reports/bug_analysis.md` + [[hot]].
+- `data/pysnooper-bugsinpy-1/SETUP.md` — subject checkout + `uv`
+- `results/baseline_red.txt` — red baseline log
+- `reports/bug_analysis.md` — metadata + future hypothesis
+
+## Regenerate
+
+- `uv run graphdebug vault-build` — refresh `generated/`, stubs, and in-vault `GRAPH_REPORT.md` copy
+- `uv run graphdebug vault-build --snapshot` — also capture `results/knowledge_snapshots/before/`

@@ -260,32 +260,32 @@ unit-tested against the real graph; reproducibility recorded.
 **Entry Gate**: Phase 2 DoD met. **Exit Gate**: `index.md`/`hot.md` exist and links resolve.
 
 ### 3.A Core navigation pages
-- [ ] **T3.1** (P0) Author `obsidian/index.md`: system map + main navigation paths; links to
+- [x] **T3.1** (P0) Author `obsidian/index.md`: system map + main navigation paths; links to
   architecture, God-nodes, components, tests, and `hot.md`.
   - **Refs**: FR-O1, RQ1, `plan §9`. **DoD**: opens in Obsidian; links resolve.
   - **⚠ Critical**: `index.md` is the agent's entry context. Keep it **dense but short** —
     a bloated index reintroduces the Lost-in-the-Middle problem it's meant to solve.
-- [ ] **T3.2** (P0) Author `obsidian/hot.md`: *Symptom*, *Suspects (ranked)*, *Checked*,
+- [x] **T3.2** (P0) Author `obsidian/hot.md`: *Symptom*, *Suspects (ranked)*, *Checked*,
   *Root cause*, *Fix*, *Next action* sections, seeded from Phase 1 symptom.
   - **Refs**: FR-O2, RQ5. **DoD**: reflects current investigation state.
   - **⚠ Critical**: `hot.md` is a **living** doc. If it goes stale, the agent reads wrong
     context and the whole "focused memory" claim is undermined. Update it every iteration.
 
 ### 3.B Component & finding pages
-- [ ] **T3.3** (P0) Implement `services/vault/builder.py`: generate component/test/finding/
+- [x] **T3.3** (P0) Implement `services/vault/builder.py`: generate component/test/finding/
   suspect pages with `[[wikilinks]]`.
   - **Refs**: FR-O3, `plan §5.3`. **DoD**: ≥4 linked pages generated.
-- [ ] **T3.4** (P0) Implement `services/vault/hot.py`: programmatic create/update of `hot.md`.
+- [x] **T3.4** (P0) Implement `services/vault/hot.py`: programmatic create/update of `hot.md`.
   - **Refs**: FR-O2. **DoD**: unit test writes/updates sections idempotently.
-- [ ] **T3.5** (P1) Implement `services/vault/snapshot.py`: capture a **before** knowledge
+- [x] **T3.5** (P1) Implement `services/vault/snapshot.py`: capture a **before** knowledge
   snapshot now (for the Phase 7 before/after diff).
   - **Refs**: FR-O4. **⚠ Critical**: you cannot produce a before/after if you forget the
     "before". Snapshot **now**, not after the fix.
 
 ### 3.C Wiring
-- [ ] **T3.6** (P1) Expose `build_vault`/`update_hot` via SDK (`sdk/api.py`); CLI calls SDK.
+- [x] **T3.6** (P1) Expose `build_vault`/`update_hot` via SDK (`sdk/api.py`); CLI calls SDK.
   - **Refs**: FR-S1, G.3.
-- [ ] **T3.7** (P2) Add a screenshot of the Obsidian graph view to `assets/` for the README.
+- [x] **T3.7** (P2) Add a screenshot of the Obsidian graph view to `assets/` for the README.
 
 **Phase 3 DoD**: navigable vault with `index.md` + `hot.md` + ≥4 linked pages; before-snapshot
 captured; vault generation exposed via SDK.

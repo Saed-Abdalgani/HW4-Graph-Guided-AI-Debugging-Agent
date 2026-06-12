@@ -31,4 +31,11 @@ uv run pytest
 uv run graphdebug --help
 ```
 
+Obsidian vault (Phase 3): from the repo root, regenerate graph-backed pages with:
+
+```bash
+uv run graphdebug vault-build
+uv run graphdebug vault-build --snapshot   # optional: results/knowledge_snapshots/before/
+```
+
 Authoritative checklists and requirements: see `prd.md`, `plan.md`, and `todo.md` at the repo root.
