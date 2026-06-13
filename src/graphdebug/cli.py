@@ -13,6 +13,7 @@ from graphdebug.cli_handlers import (
     run_vault_snapshot,
     version_string,
 )
+from graphdebug.cli_phase7 import add_phase7_parser, run_phase7_cli
 
 
 def main() -> None:
@@ -26,6 +27,7 @@ def main() -> None:
         version=version_string(),
     )
     subparsers = parser.add_subparsers(dest="command")
+    add_phase7_parser(subparsers)
     graphify_load = subparsers.add_parser(
         "graphify-load",
         help="Load a Graphify graph.json artifact and print sanity counts.",
@@ -135,6 +137,8 @@ def main() -> None:
         run_phase4_export(args)
     elif args.command == "investigate":
         run_investigate_cli(args)
+    elif args.command == "phase7":
+        run_phase7_cli(args)
 
 
 if __name__ == "__main__":

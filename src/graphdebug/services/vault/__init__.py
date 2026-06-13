@@ -12,12 +12,16 @@ from graphdebug.services.vault.hot import (
     render_hot,
     update_hot,
 )
-from graphdebug.services.vault.snapshot import capture_knowledge_snapshot
+from graphdebug.services.vault.snapshot import (
+    AFTER_SNAPSHOT_SUBDIR,
+    capture_knowledge_snapshot,
+)
 
 __all__ = [
     "DEFAULT_FOCUS_NODE_IDS",
     "HOT_SECTION_KEYS",
     "HOT_SECTION_TITLES",
+    "AFTER_SNAPSHOT_SUBDIR",
     "VaultBuildResult",
     "build_vault",
     "capture_knowledge_snapshot",

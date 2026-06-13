@@ -120,7 +120,7 @@ def test_sdk_investigate_delegates(monkeypatch: pytest.MonkeyPatch) -> None:
     def fake_run(*_a, **_k):
         return InvestigationResult("1", "naive", Path("x"), {}, None)
 
-    monkeypatch.setattr("graphdebug.sdk.api.run_investigation", fake_run)
+    monkeypatch.setattr("graphdebug.sdk.api_core.run_investigation", fake_run)
     from graphdebug.sdk.api import investigate
 
     r = investigate(

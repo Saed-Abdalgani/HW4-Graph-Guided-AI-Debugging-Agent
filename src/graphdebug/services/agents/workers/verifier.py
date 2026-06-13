@@ -9,16 +9,7 @@ from pathlib import Path
 
 from graphdebug.services.agents import budget as budget_mod
 from graphdebug.services.agents.state import AgentState, StepRecordTD
-
-
-def _failed_from_output(blob: str) -> set[str]:
-    failed: set[str] = set()
-    for line in blob.splitlines():
-        if line.startswith("FAILED "):
-            parts = line.split()
-            if len(parts) >= 2:
-                failed.add(parts[1].strip())
-    return failed
+from graphdebug.services.pytest_parse import failed_nodeids_from_pytest_text
 
 
 def default_verify(state: AgentState) -> dict:
@@ -46,7 +37,7 @@ def default_verify(state: AgentState) -> dict:
         check=False,
     )
     blob = (proc.stdout or "") + "\n" + (proc.stderr or "")
-    failed = _failed_from_output(blob)
+    failed = failed_nodeids_from_pytest_text(blob)
     targets = set(tests)
     extra_failures = failed - targets
     verified = proc.returncode == 0 and not extra_failures

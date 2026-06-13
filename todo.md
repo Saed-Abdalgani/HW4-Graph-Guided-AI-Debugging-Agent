@@ -432,26 +432,33 @@ with a saved ledger tagged as the graph arm.
 
 **Entry Gate**: candidate patch from Phase 6. **Exit Gate**: red→green, no new regressions.
 
-- [ ] **T7.1** (P0) Review the proposed patch (HITL); confirm it addresses the **root cause**,
+- [/] **T7.1** (P0) Review the proposed patch (HITL); confirm it addresses the **root cause**,
   not the symptom.
   - **Refs**: FR-B2, FR-B3, RQ5. **⚠ Critical**: a patch that suppresses the exception or
     special-cases the failing input is a **symptom mask**, not a fix. Reject masks.
-- [ ] **T7.2** (P0) Apply the fix to `data/<target>/` (after approval); keep the diff.
+  - **Automation**: `graphdebug phase7 review-patch --diff` prints heuristic warnings (not a substitute for human review).
+- [/] **T7.2** (P0) Apply the fix to `data/<target>/` (after approval); keep the diff.
   - **Refs**: FR-B3. **DoD**: `reports/fix.diff` saved.
-- [ ] **T7.3** (P0) Run the target test → **PASS**; save `results/baseline_green.txt`.
+  - **Automation**: `graphdebug phase7 apply --diff … --target-root …` (git working tree required).
+- [/] **T7.3** (P0) Run the target test → **PASS**; save `results/baseline_green.txt`.
   - **Refs**: FR-B4. **DoD**: previously-failing test now passes.
-- [ ] **T7.4** (P0) Run the available suite → **no new failures** (regression check).
+  - **Automation**: `phase7 verify` writes `baseline_green.txt` and `suite_green.txt`.
+- [/] **T7.4** (P0) Run the available suite → **no new failures** (regression check).
   - **Refs**: FR-B4, NFR. **⚠ Critical**: compare against the red-baseline run, not memory.
     Newly broken tests = not done.
-- [ ] **T7.5** (P1) Compare the fix to the official patch (from T1.9) — agreement or a valid
+  - **Automation**: `regression_phase7.txt` when `results/baseline_red.txt` (or `--baseline-red`) is a **full-suite** log at same scope.
+- [/] **T7.5** (P1) Compare the fix to the official patch (from T1.9) — agreement or a valid
   alternative? Document the comparison.
   - **Refs**: RQ5. **⚠ Critical**: if they differ, justify why yours is also correct (or fix).
-- [ ] **T7.6** (P0) Complete `reports/bug_analysis.md`: Problem → Reproduction → Investigation
+  - **Automation**: `phase7 patch-compare` writes `reports/patch_comparison.md` scaffold.
+- [/] **T7.6** (P0) Complete `reports/bug_analysis.md`: Problem → Reproduction → Investigation
   trail → **Root cause** → Change → Tests.
   - **Refs**: FR-B5, RQ5.
-- [ ] **T7.7** (P0) Capture **after** knowledge snapshot; produce before/after diff (pages,
+  - **Automation**: `phase7 merge-docs` replaces italic `_TBD…_` placeholders.
+- [/] **T7.7** (P0) Capture **after** knowledge snapshot; produce before/after diff (pages,
   links, insights added; architectural understanding change).
   - **Refs**: FR-O4, RQ1. **DoD**: before/after recorded in `reports/` + `obsidian/`.
+  - **Automation**: `phase7 snapshot-after` + `phase7 vault-diff` → `reports/vault_before_after.md`.
 - [ ] **T7.8** (P2) If architecture understanding changed, update the block/OOP diagrams or
   add an "after" variant (extension FR-E5).
 

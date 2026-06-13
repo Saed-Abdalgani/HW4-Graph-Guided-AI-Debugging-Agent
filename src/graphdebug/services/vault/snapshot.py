@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 DEFAULT_SNAPSHOT_SUBDIR = "knowledge_snapshots/before"
+AFTER_SNAPSHOT_SUBDIR = "knowledge_snapshots/after"
 
 
 def capture_knowledge_snapshot(
