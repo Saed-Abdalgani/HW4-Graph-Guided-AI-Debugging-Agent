@@ -11,7 +11,9 @@ from graphdebug.services.analysis.god_nodes import select_god_nodes
 from graphdebug.services.analysis.oop_slice import build_oop_digraph
 from graphdebug.services.analysis.subsystems import infer_subsystems
 from graphdebug.services.graphify.loader import load_graph
-from graphdebug.shared.config import AppConfig, BudgetProfile
+from graphdebug.shared.config import AppConfig, BudgetProfile, RetrieverConfig
+
+
 def _tiny_graph(path: Path) -> None:
     path.write_text(
         json.dumps(
@@ -112,6 +114,7 @@ def _minimal_config(root: Path) -> AppConfig:
             "data_root": "data",
             "reports": "rep",
         },
+        "retriever": {"max_lines_per_file": 10, "max_suspects_fetched": 2},
         "features": {"hitl_required": True, "enable_langsmith": False},
         "analysis": {"source_prefixes": ["pysnooper/"]},
     }
@@ -128,8 +131,11 @@ def _minimal_config(root: Path) -> AppConfig:
         budgets=budgets,
         paths=paths,
         features=dict(raw["features"]),
+        retriever=RetrieverConfig(max_lines_per_file=10, max_suspects_fetched=2),
         openai_api_key=None,
     )
+
+
 def test_export_phase4_writes_outputs(tmp_path: Path) -> None:
     root = tmp_path
     (root / "gart").mkdir()

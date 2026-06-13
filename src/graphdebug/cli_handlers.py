@@ -82,3 +82,30 @@ def run_phase4_export(args: argparse.Namespace) -> None:
         f"arch_png={res.architecture_png}",
         f"oop_png={res.oop_png}",
     )
+
+
+def run_investigate_cli(args: argparse.Namespace) -> None:
+    from graphdebug.sdk.api import BugTask, investigate
+
+    root = (args.project_root or Path.cwd()).resolve()
+    bug = BugTask(
+        target_root=str(args.target_root.resolve()),
+        failing_tests=tuple(args.tests),
+        symptom=str(args.symptom),
+    )
+    res = investigate(
+        bug,
+        args.mode,
+        project_root=root,
+        assume_hitl_ack=bool(args.assume_hitl_ack),
+    )
+    fs = res.final_state
+    print(
+        "investigate:",
+        f"run_id={res.run_id}",
+        f"mode={res.mode}",
+        f"ledger={res.ledger_path}",
+        f"halted={res.halted_reason!r}",
+        f"verified={fs.get('verified')}",
+        f"scribed={fs.get('scribed')}",
+    )

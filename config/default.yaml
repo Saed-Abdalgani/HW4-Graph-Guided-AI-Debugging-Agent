@@ -42,6 +42,10 @@ analysis:
   louvain_seed: 42
   louvain_resolution: 1.15
 
+retriever:
+  max_lines_per_file: 120
+  max_suspects_fetched: 4
+
 features:
   hitl_required: true
   enable_langsmith: false

@@ -7,6 +7,7 @@ from pathlib import Path
 
 from graphdebug.cli_handlers import (
     print_graphify_summary,
+    run_investigate_cli,
     run_phase4_export,
     run_vault_build,
     run_vault_snapshot,
@@ -83,6 +84,46 @@ def main() -> None:
         default=None,
         help="Override path to graph.json.",
     )
+    investigate = subparsers.add_parser(
+        "investigate",
+        help="Run the graph-guided or naive multi-agent investigation (Phase 5).",
+    )
+    investigate.add_argument(
+        "--mode",
+        choices=("graph", "naive"),
+        required=True,
+        help="graph = vault+graph context; naive = fair baseline without graph/vault.",
+    )
+    investigate.add_argument(
+        "--target-root",
+        type=Path,
+        required=True,
+        help="Path to the buggy project root (subject under data/).",
+    )
+    investigate.add_argument(
+        "--test",
+        action="append",
+        dest="tests",
+        metavar="NODEID",
+        required=True,
+        help="Pytest node id (repeatable), e.g. tests/test_x.py::test_one.",
+    )
+    investigate.add_argument(
+        "--symptom",
+        default="(see baseline logs)",
+        help="Short symptom text for prompts.",
+    )
+    investigate.add_argument(
+        "--project-root",
+        type=Path,
+        default=None,
+        help="graphdebug repo root (default: cwd).",
+    )
+    investigate.add_argument(
+        "--assume-hitl-ack",
+        action="store_true",
+        help="Ack the HITL interrupt automatically (non-interactive; use with care).",
+    )
     args = parser.parse_args()
     if args.command == "graphify-load":
         print_graphify_summary(args.graph_path)
@@ -92,6 +133,8 @@ def main() -> None:
         run_vault_snapshot(args)
     elif args.command == "phase4-export":
         run_phase4_export(args)
+    elif args.command == "investigate":
+        run_investigate_cli(args)
 
 
 if __name__ == "__main__":

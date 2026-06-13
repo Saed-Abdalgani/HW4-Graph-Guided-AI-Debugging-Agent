@@ -2,9 +2,16 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from pathlib import Path
+from typing import Any
 
+from langchain_core.messages import AIMessage
+
+from graphdebug.services.agents.runner import run_investigation
+from graphdebug.services.agents.result import InvestigationResult
+from graphdebug.services.agents.state import BugTask, Mode
+from graphdebug.services.agents.suspect_rank import rank_suspects
 from graphdebug.services.analysis import (
     CentralityRow,
     GodNode,
@@ -72,8 +79,38 @@ def update_hot(path: str | Path, sections: dict[str, str]) -> str:
     return write_hot_sections(Path(path), sections)
 
 
+def investigate(
+    bug_task: BugTask,
+    mode: Mode,
+    *,
+    project_root: Path | None = None,
+    require_api_key: bool = True,
+    assume_hitl_ack: bool = False,
+    verify_fn: Callable[..., dict[str, Any]] | None = None,
+    llm_invoker: Callable[..., AIMessage] | None = None,
+) -> InvestigationResult:
+    """Run the LangGraph investigation workflow (Phase 5, FR-S1).
+
+    When ``features.hitl_required`` is true in config, either pass
+    ``assume_hitl_ack=True`` for non-interactive runs or drive the graph with
+    ``stream`` + ``Command(resume=...)`` to answer ``interrupt()`` prompts.
+    """
+    root = (project_root or Path.cwd()).resolve()
+    need_key = require_api_key if llm_invoker is None else False
+    cfg = load_config(project_root=root, require_api_key=need_key)
+    return run_investigation(
+        bug_task,
+        mode,
+        cfg,
+        verify_fn=verify_fn,
+        llm_invoker=llm_invoker,
+        assume_hitl_ack=assume_hitl_ack,
+    )
+
+
 __all__ = [
     "AppConfig",
+    "BugTask",
     "CentralityRow",
     "CodeGraph",
     "ConfigError",
@@ -83,6 +120,8 @@ __all__ = [
     "GraphNode",
     "GraphQueryError",
     "GraphSanity",
+    "InvestigationResult",
+    "Mode",
     "Phase4ExportResult",
     "VaultBuildResult",
     "build_project_vault",
@@ -93,11 +132,13 @@ __all__ = [
     "export_project_phase4",
     "get_version",
     "graph_sanity",
+    "investigate",
     "load_code_graph",
     "load_config",
     "neighbors",
     "parse_hot",
     "path_between_nodes",
+    "rank_suspects",
     "render_hot",
     "traverse_hops",
     "update_hot",

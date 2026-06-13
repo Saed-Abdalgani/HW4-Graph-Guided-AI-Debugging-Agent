@@ -335,12 +335,12 @@ captured; vault generation exposed via SDK.
 on a fixture within budget caps. Detail spec: `docs/PRD_multiagent.md`.
 
 ### 5.A Shared foundations
-- [ ] **T5.1** (P0) Implement `services/agents/state.py` (`AgentState` TypedDict per `plan §6.1`),
+- [x] **T5.1** (P0) Implement `services/agents/state.py` (`AgentState` TypedDict per `plan §6.1`),
   plus `BugTask`, `SuspectNode`, `Patch`, `BudgetState`, `StepRecord`.
   - **Refs**: FR-A4, `plan §6`. **DoD**: importable, typed; unit test constructs/round-trips.
   - **⚠ Critical**: get the state schema **right early** — every worker depends on it (G.7).
     Adding a field later means touching all nodes. Review the full schema before coding nodes.
-- [ ] **T5.2** (P0) Implement `shared/gatekeeper.py`: token-bucket rate limit (RPM/TPM from
+- [x] **T5.2** (P0) Implement `shared/gatekeeper.py`: token-bucket rate limit (RPM/TPM from
   config), bounded queue (backpressure), retry+exponential backoff, structured logging,
   **ledger hook**, secret redaction.
   - **Refs**: FR-S2, FR-A5, ADR-5, NFR-3, G.4, G.10. **DoD**: unit tests for rate-limit,
@@ -348,51 +348,51 @@ on a fixture within budget caps. Detail spec: `docs/PRD_multiagent.md`.
   - **⚠ Critical**: this is the cost-control linchpin. Test the *limit-exceeded* and
     *retry-exhausted* paths, not just the happy path. Mock the LLM — never hit the real API
     in unit tests.
-- [ ] **T5.3** (P0) Implement `services/agents/budget.py`: pre-call guard that halts/raises
+- [x] **T5.3** (P0) Implement `services/agents/budget.py`: pre-call guard that halts/raises
   when `max_tokens`/`max_tool_calls`/`max_files`/`max_iterations` would be exceeded.
   - **Refs**: FR-A5. **DoD**: unit tests for each cap boundary (at, just under, just over).
   - **⚠ Critical**: the budget guard must run **before** the spend, not after. An after-the-fact
     check still burns the tokens it was meant to prevent.
-- [ ] **T5.4** (P0) Implement `services/ledger/` (record + aggregate, JSONL to
+- [x] **T5.4** (P0) Implement `services/ledger/` (record + aggregate, JSONL to
   `results/<run_id>/ledger.jsonl`).
   - **Refs**: FR-T3, `plan §5.5`, `docs/PRD_token_ledger.md`. **DoD**: aggregation unit-tested.
 
 ### 5.B Workers (each = small, role-scoped prompt)
-- [ ] **T5.5** (P0) `workers/navigator.py`: reads `index.md`, `hot.md`, `GRAPH_REPORT.md`
+- [x] **T5.5** (P0) `workers/navigator.py`: reads `index.md`, `hot.md`, `GRAPH_REPORT.md`
   to orient; sets `oriented`. **No raw source reads.**
   - **Refs**: FR-A2, FR-A3. **DoD**: node updates state from vault context only.
-- [ ] **T5.6** (P0) `workers/investigator.py`: queries `graph.json` (+ centrality, test
+- [x] **T5.6** (P0) `workers/investigator.py`: queries `graph.json` (+ centrality, test
   proximity) to produce ranked `suspects`; sets `suspects_ranked`.
   - **Refs**: FR-A3, FR-E1, RQ2. **DoD**: outputs ≥1 ranked suspect with rationale.
-- [ ] **T5.7** (P0) `workers/retriever.py`: fetches **minimal** code slices for top suspects,
+- [x] **T5.7** (P0) `workers/retriever.py`: fetches **minimal** code slices for top suspects,
   **budget-gated**; the **only** worker allowed to read source.
   - **Refs**: FR-A2, FR-A5. **DoD**: respects `max_files`; records files read to ledger.
   - **⚠ Critical**: enforce "minimal slice", not whole-file dumps. Whole-file reads here
     quietly erase the token advantage the whole project is trying to prove.
-- [ ] **T5.8** (P0) `workers/fixer.py`: proposes a minimal patch (unified diff) + rationale;
+- [x] **T5.8** (P0) `workers/fixer.py`: proposes a minimal patch (unified diff) + rationale;
   sets `patch_ready`. **Does not apply** the patch.
   - **Refs**: FR-B3, FR-A7. **DoD**: emits a valid diff object referencing real locations.
-- [ ] **T5.9** (P0) `workers/verifier.py`: runs the target test(s) via subprocess; sets
+- [x] **T5.9** (P0) `workers/verifier.py`: runs the target test(s) via subprocess; sets
   `verified` on red→green with no new failures.
   - **Refs**: FR-B4. **DoD**: parses pytest result; distinguishes target-pass vs regressions.
   - **⚠ Critical**: "tests pass" must mean *the previously-failing test now passes AND nothing
     else newly fails*. A patch that green-lights the target by breaking others is a regression.
-- [ ] **T5.10** (P0) `workers/scribe.py`: updates `hot.md`, suspect/finding pages, and run log.
+- [x] **T5.10** (P0) `workers/scribe.py`: updates `hot.md`, suspect/finding pages, and run log.
   - **Refs**: FR-O2, FR-A3. **DoD**: vault reflects latest state after each cycle.
 
 ### 5.C Orchestration
-- [ ] **T5.11** (P0) `supervisor.py`: routing node returning `Command(goto=...)` from state
+- [x] **T5.11** (P0) `supervisor.py`: routing node returning `Command(goto=...)` from state
   flags (`oriented`→`suspects_ranked`→`code_fetched`→`patch_ready`→`verified`).
   - **Refs**: FR-A1, FR-A6, ADR-3, `plan §2`. **DoD**: deterministic routing unit-tested.
-- [ ] **T5.12** (P0) `graph_app.py`: build/compile the LangGraph; wire workers + supervisor;
+- [x] **T5.12** (P0) `graph_app.py`: build/compile the LangGraph; wire workers + supervisor;
   optional checkpointer for HITL.
   - **Refs**: FR-A1, FR-A7. **DoD**: compiles; dry-run on fixture traverses all nodes.
-- [ ] **T5.13** (P0) HITL gate before applying any code change.
+- [x] **T5.13** (P0) HITL gate before applying any code change.
   - **Refs**: FR-A7. **⚠ Critical**: never let the agent write to `data/<target>/` source
     without an explicit human approval step — autonomous edits to the subject corrupt evidence.
-- [ ] **T5.14** (P0) Expose `investigate(bug_task, mode)` via SDK; CLI subcommand calls SDK.
+- [x] **T5.14** (P0) Expose `investigate(bug_task, mode)` via SDK; CLI subcommand calls SDK.
   - **Refs**: FR-S1, FR-S3, G.3.
-- [ ] **T5.15** (P1) Implement the **naive baseline** mode in the same harness (free raw-file
+- [x] **T5.15** (P1) Implement the **naive baseline** mode in the same harness (free raw-file
   reading, no graph/index/hot/vault context) for Phase 8.
   - **Refs**: FR-T1, `plan §12`. **⚠ Critical**: the naive arm must be a *fair* baseline —
     same model, same task, same stop criteria — differing **only** in context strategy.

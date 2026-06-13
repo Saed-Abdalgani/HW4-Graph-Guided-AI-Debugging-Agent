@@ -41,6 +41,9 @@ _MINIMAL_YAML = textwrap.dedent(
       results: r
       data_root: d
       reports: rep
+    retriever:
+      max_lines_per_file: 50
+      max_suspects_fetched: 2
     features:
       hitl_required: false
       enable_langsmith: false
@@ -55,6 +58,7 @@ def test_load_repo_default_config_with_api_key(monkeypatch: pytest.MonkeyPatch) 
     root = config_module._project_root()
     cfg = load_config(project_root=root, require_api_key=True)
     assert cfg.budgets["graph"].max_files == 30
+    assert cfg.retriever.max_lines_per_file == 120
     assert cfg.openai_api_key == "sk-test"
 
 

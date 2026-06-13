@@ -11,7 +11,7 @@ from typing import Any
 import yaml
 from dotenv import load_dotenv
 
-REQUIRED_YAML_SECTIONS = ("llm", "gatekeeper", "budgets", "paths", "features")
+REQUIRED_YAML_SECTIONS = ("llm", "gatekeeper", "budgets", "paths", "features", "retriever")
 REQUIRED_BUDGET_PROFILES = ("naive", "graph")
 
 
@@ -48,6 +48,12 @@ class BudgetProfile:
 
 
 @dataclass(frozen=True, slots=True)
+class RetrieverConfig:
+    max_lines_per_file: int
+    max_suspects_fetched: int
+
+
+@dataclass(frozen=True, slots=True)
 class AppConfig:
     raw: dict[str, Any]
     project_root: Path
@@ -56,6 +62,7 @@ class AppConfig:
     budgets: dict[str, BudgetProfile]
     paths: dict[str, Path]
     features: dict[str, Any]
+    retriever: RetrieverConfig
     openai_api_key: str | None
 
 
@@ -114,6 +121,17 @@ def load_config(
     )
     paths = {k: (root / str(v)).resolve() for k, v in paths_raw.items()}
 
+    retriever_raw = data["retriever"]
+    _require_keys(
+        retriever_raw,
+        ("max_lines_per_file", "max_suspects_fetched"),
+        where="retriever",
+    )
+    retriever = RetrieverConfig(
+        max_lines_per_file=int(retriever_raw["max_lines_per_file"]),
+        max_suspects_fetched=int(retriever_raw["max_suspects_fetched"]),
+    )
+
     api_key = os.getenv("OPENAI_API_KEY") or os.getenv("GRAPHDEBUG_OPENAI_API_KEY")
     if require_api_key and not (api_key and api_key.strip()):
         raise ConfigError(
@@ -129,5 +147,6 @@ def load_config(
         budgets=budgets,
         paths=paths,
         features=dict(data["features"]),
+        retriever=retriever,
         openai_api_key=api_key.strip() if api_key else None,
     )
