@@ -19,6 +19,15 @@ from graphdebug.sdk.phase7 import (
     scaffold_patch_comparison,
     write_vault_knowledge_delta,
 )
+from graphdebug.services.extensions import (
+    DocSignal,
+    architecture_ego_report,
+    doc_graph_signals,
+    impact_of,
+    merge_git_diff_into_hot,
+    node_ids_for_paths,
+    paths_from_diff,
+)
 from graphdebug.services.fixverify.review import PatchReviewResult, review_patch_for_symptom_masks
 from graphdebug.services.fixverify.verify import new_failures_since_baseline
 
@@ -37,4 +46,11 @@ __all__ = list(_CORE_ALL) + [
     "run_phase7_verification",
     "scaffold_patch_comparison",
     "write_vault_knowledge_delta",
+    "DocSignal",
+    "architecture_ego_report",
+    "doc_graph_signals",
+    "impact_of",
+    "merge_git_diff_into_hot",
+    "node_ids_for_paths",
+    "paths_from_diff",
 ]

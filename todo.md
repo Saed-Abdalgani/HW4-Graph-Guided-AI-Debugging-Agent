@@ -505,23 +505,23 @@ deviation explained with root-cause analysis.
 **Entry Gate**: core flow works (Phases 5–8). **Exit Gate**: ≥1 extension per area, documented.
 > Assignment §5.6 requires **at least one original extension per part**. Pick deliberately.
 
-- [ ] **T9.1** (P1) **Suspect ranking** by centrality + proximity to failing tests (wire into
+- [x] **T9.1** (P1) **Suspect ranking** by centrality + proximity to failing tests (wire into
   Investigator).
   - **Refs**: FR-E1, RQ2. **DoD**: ranking function + test; used in a real run.
-- [ ] **T9.2** (P1) **Dynamic `hot.md`** generated from `git diff` + `graph.json` (map changed
+- [x] **T9.2** (P1) **Dynamic `hot.md`** generated from `git diff` + `graph.json` (map changed
   lines → graph nodes → impacted neighbors).
   - **Refs**: FR-E2. **DoD**: `update_hot(diff, graph)` produces a focused hot page.
   - **⚠ Critical**: this is a strong, on-theme extension — but only valuable if the mapping
     from diff hunks to graph nodes is accurate. Validate on the real fix diff.
-- [ ] **T9.3** (P2) **Impact report**: "what breaks if we change node X?" (reverse-dependency
+- [x] **T9.3** (P2) **Impact report**: "what breaks if we change node X?" (reverse-dependency
   traversal).
   - **Refs**: FR-E4. **DoD**: `impact_of(graph, node_id)` + a sample report.
-- [ ] **T9.4** (P2) **Doc-vs-behavior contradiction** detector (docstring/README claims vs
+- [x] **T9.4** (P2) **Doc-vs-behavior contradiction** detector (docstring/README claims vs
   graph/behavior).
   - **Refs**: FR-E3.
-- [ ] **T9.5** (P2) **Before/after architecture comparison** (graph delta around the fix).
+- [x] **T9.5** (P2) **Before/after architecture comparison** (graph delta around the fix).
   - **Refs**: FR-E5, RQ1.
-- [ ] **T9.6** (P1) Document all extensions in `reports/extensions.md` with examples + RQ8
+- [x] **T9.6** (P1) Document all extensions in `reports/extensions.md` with examples + RQ8
   ("what we'd add next").
   - **Refs**: RQ8.
   - **⚠ Critical**: an extension that is coded but undocumented earns little. Each needs a
