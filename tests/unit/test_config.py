@@ -52,10 +52,10 @@ _MINIMAL_YAML = textwrap.dedent(
 
 
 def test_load_repo_default_config_with_api_key(monkeypatch: pytest.MonkeyPatch) -> None:
-    from graphdebug.shared import config as config_module
+    from graphdebug.shared.config_load_helpers import project_root_from_here
 
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
-    root = config_module._project_root()
+    root = project_root_from_here()
     cfg = load_config(project_root=root, require_api_key=True)
     assert cfg.budgets["graph"].max_files == 30
     assert cfg.retriever.max_lines_per_file == 120

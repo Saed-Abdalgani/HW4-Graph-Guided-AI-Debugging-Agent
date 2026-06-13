@@ -5,6 +5,12 @@ llm:
   model: gpt-4o-mini
   temperature: 0.0
   max_output_tokens: 4096
+  seed: 42
+
+experiment:
+  # Rough USD / 1K tokens for reporting (T8.7); adjust to your provider list price.
+  usd_per_1k_prompt_tokens: 0.00015
+  usd_per_1k_completion_tokens: 0.00060
 
 gatekeeper:
   requests_per_minute: 60

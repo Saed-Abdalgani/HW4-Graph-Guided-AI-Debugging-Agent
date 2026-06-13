@@ -32,5 +32,6 @@ _TBD._
 
 ## Next action
 
+- **Phase 8**: run `uv run graphdebug experiment …` (see `README.md`) to refresh `reports/token_comparison.md` + `assets/token_chart.png` from ledgers.
 - After any Graphify re-run: `uv run graphdebug vault-build` then refresh [[hot]] + suspect/finding notes.
 - Phase 4: centrality + god-node report + architecture diagrams (`reports/god_nodes.md`, `assets/`).

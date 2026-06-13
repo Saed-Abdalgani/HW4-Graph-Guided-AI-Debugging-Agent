@@ -1,7 +1,9 @@
 """Exercise ``sdk.phase7`` helpers against a minimal config tree."""
 from __future__ import annotations
+
 import textwrap
 from pathlib import Path
+
 import pytest
 
 _MINIMAL_YAML = (

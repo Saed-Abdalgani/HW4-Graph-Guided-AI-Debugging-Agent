@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Sequence
+from typing import Any
 
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
@@ -32,7 +33,15 @@ def build_chat_model(cfg: AppConfig) -> ChatOpenAI:
         model=str(cfg.llm["model"]),
         temperature=float(cfg.llm.get("temperature", 0.0)),
         max_tokens=int(cfg.llm.get("max_output_tokens", 1024)),
+        model_kwargs=_llm_model_kwargs(cfg),
     )
+
+
+def _llm_model_kwargs(cfg: AppConfig) -> dict[str, Any]:
+    seed = cfg.llm.get("seed")
+    if seed is None:
+        return {}
+    return {"seed": int(seed)}
 
 
 def gatekeeper_user_content(messages: Sequence[BaseMessage]) -> str:

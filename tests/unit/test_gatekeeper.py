@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 from graphdebug.services.agents.state import initial_budget_row
@@ -12,7 +13,7 @@ from graphdebug.shared.config import AppConfig, BudgetProfile, load_config
 from graphdebug.shared.gatekeeper import Gatekeeper, redact_secrets
 
 
-def _minimal_cfg(root: Path) -> AppConfig:
+def _minimal_cfg(root: Path, *, seed: int | None = None) -> AppConfig:
     text = """
 llm:
   provider: openai
@@ -52,6 +53,11 @@ features:
 analysis:
   source_prefixes: ["pkg/"]
 """
+    if seed is not None:
+        text = text.replace(
+            "temperature: 0.0",
+            f"temperature: 0.0\n  seed: {int(seed)}",
+        )
     (root / "config").mkdir(parents=True, exist_ok=True)
     (root / "config" / "default.yaml").write_text(text, encoding="utf-8")
     return load_config(project_root=root, require_api_key=False)
@@ -95,3 +101,19 @@ def test_gatekeeper_invoker_emits_ledger(tmp_path: Path) -> None:
     assert len(lines) == 1
     assert budget["tool_calls"] == 1
     assert budget["tokens_used"] == 5
+
+
+def test_build_chat_model_forwards_seed(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    from graphdebug.shared import gatekeeper_support as gks
+
+    captured: dict[str, object] = {}
+
+    class _Fake:
+        def __init__(self, **kw: object) -> None:
+            captured.update(kw)
+
+    monkeypatch.setattr(gks, "ChatOpenAI", _Fake)
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-seed-test")
+    cfg = _minimal_cfg(tmp_path, seed=91)
+    gks.build_chat_model(cfg)
+    assert captured.get("model_kwargs") == {"seed": 91}

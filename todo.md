@@ -472,27 +472,27 @@ before/after knowledge snapshot done.
 **Entry Gate**: graph arm run exists (Phase 6); naive mode implemented (T5.15).
 **Exit Gate**: comparison report with KPIs met or deviation explained.
 
-- [ ] **T8.1** (P0) Implement `services/experiment/` harness: run the **same** bug task in
+- [x] **T8.1** (P0) Implement `services/experiment/` harness: run the **same** bug task in
   **naive** and **graph** modes with identical model/temperature/seed/stop criteria.
   - **Refs**: FR-T1, FR-T2, FR-T5, `plan §12`. **DoD**: one command runs both arms.
   - **⚠ Critical**: any uncontrolled difference (different model, prompt, or stop rule) makes
     the comparison meaningless. Hold everything constant except context strategy.
-- [ ] **T8.2** (P0) Collect per-arm metrics from ledgers: total tokens (prompt+completion),
+- [x] **T8.2** (P0) Collect per-arm metrics from ledgers: total tokens (prompt+completion),
   files/text-units read, iterations, wall-clock, reached-root-cause (Y/N), fix-correct (Y/N).
   - **Refs**: FR-T3, assignment §5.5. **DoD**: metrics table generated programmatically.
-- [ ] **T8.3** (P0) Write `reports/token_comparison.md`: side-by-side table + **explicit %
+- [x] **T8.3** (P0) Write `reports/token_comparison.md`: side-by-side table + **explicit %
   savings** + verdict answering RQ6 & RQ7.
   - **Refs**: FR-T4, RQ6, RQ7. **DoD**: report present with numbers, not adjectives.
-- [ ] **T8.4** (P1) Generate a bar chart to `assets/token_chart.*`; embed in README.
+- [x] **T8.4** (P1) Generate a bar chart to `assets/token_chart.*`; embed in README.
   - **Refs**: FR-T4.
-- [ ] **T8.5** (P1) Provide `notebooks/experiment.ipynb` to reproduce the comparison.
+- [x] **T8.5** (P1) Provide `notebooks/experiment.ipynb` to reproduce the comparison.
   - **Refs**: FR-T5.
-- [ ] **T8.6** (P1) Validate KPIs vs `prd §6` (≥50% token & file reduction, ≤ iterations).
+- [x] **T8.6** (P1) Validate KPIs vs `prd §6` (≥50% token & file reduction, ≤ iterations).
   - **⚠ Critical**: if the graph arm does **not** win, do not fake numbers. Investigate why
     (naive baseline too weak? graph scope wrong? whole-file reads leaking?), fix, and re-run.
     An honest negative with analysis beats a fabricated positive — but most likely the leak is
     in the retriever (T5.7) or an over-stuffed `index.md` (T3.1).
-- [ ] **T8.7** (P2) Report estimated **cost** ($) per arm using config token prices.
+- [x] **T8.7** (P2) Report estimated **cost** ($) per arm using config token prices.
   - **Refs**: system-prompt §Research/results (cost analysis).
 
 **Phase 8 DoD**: reproducible two-arm experiment; `token_comparison.md` + chart; KPIs met or

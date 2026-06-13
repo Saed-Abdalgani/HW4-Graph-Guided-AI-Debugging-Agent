@@ -46,6 +46,7 @@ def test_finalize_writes_manifest_and_arm_mirror(tmp_path: Path) -> None:
         },
         "hypothesis": "bad default",
         "patch": {"unified_diff": "--- a/x\n+++ b/x\n", "rationale": ""},
+        "iterations": 4,
     }
     mf, arm = finalize_investigation_run(
         project_root=tmp_path,
@@ -62,6 +63,7 @@ def test_finalize_writes_manifest_and_arm_mirror(tmp_path: Path) -> None:
     assert data["experiment_arm"] == "graph"
     assert data["phase_tag"] == "phase6_investigation"
     assert data["ledger_aggregate"]["entries"] == 1
+    assert data["iterations"] == 4
     assert (arm / "ledger.jsonl").is_file()
     assert (arm / "manifest.json").is_file()
     assert (tmp_path / "results" / "experiment_arms" / "graph" / "LATEST").read_text(

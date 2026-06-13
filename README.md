@@ -57,4 +57,20 @@ slice of `graph.json`. See `reports/architecture.md` for RQ1 / RQ4 narrative.
 
 ![OOP structure slice](assets/oop.png)
 
+## Token experiment (Phase 8)
+
+Run **naive then graph** with one command (same model, temperature, and `llm.seed` from `config/default.yaml`; arms differ only in context strategy). This writes `reports/token_comparison.md` and `assets/token_chart.png` from **ledger aggregates** in each run’s `manifest.json`.
+
+```bash
+uv run graphdebug experiment \
+  --target-root data/pysnooper-bugsinpy-1 \
+  --test tests/test_chinese.py::test_chinese \
+  --symptom "UnicodeEncodeError on non-ASCII snoop output" \
+  --assume-hitl-ack
+```
+
+Reproduce the tables in `notebooks/experiment.ipynb`. The committed `assets/token_chart.png` is an **illustrative** sample (same shape as the harness output); real runs overwrite it.
+
+![Naive vs graph token and file-read counts](assets/token_chart.png)
+
 Authoritative checklists and requirements: see `prd.md`, `plan.md`, and `todo.md` at the repo root.

@@ -5,6 +5,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from graphdebug.cli_bugargs import add_bug_task_arguments
+from graphdebug.cli_experiment import add_experiment_parser, run_experiment_cli
 from graphdebug.cli_handlers import (
     print_graphify_summary,
     run_investigate_cli,
@@ -96,36 +98,8 @@ def main() -> None:
         required=True,
         help="graph = vault+graph context; naive = fair baseline without graph/vault.",
     )
-    investigate.add_argument(
-        "--target-root",
-        type=Path,
-        required=True,
-        help="Path to the buggy project root (subject under data/).",
-    )
-    investigate.add_argument(
-        "--test",
-        action="append",
-        dest="tests",
-        metavar="NODEID",
-        required=True,
-        help="Pytest node id (repeatable), e.g. tests/test_x.py::test_one.",
-    )
-    investigate.add_argument(
-        "--symptom",
-        default="(see baseline logs)",
-        help="Short symptom text for prompts.",
-    )
-    investigate.add_argument(
-        "--project-root",
-        type=Path,
-        default=None,
-        help="graphdebug repo root (default: cwd).",
-    )
-    investigate.add_argument(
-        "--assume-hitl-ack",
-        action="store_true",
-        help="Ack the HITL interrupt automatically (non-interactive; use with care).",
-    )
+    add_bug_task_arguments(investigate)
+    add_experiment_parser(subparsers)
     args = parser.parse_args()
     if args.command == "graphify-load":
         print_graphify_summary(args.graph_path)
@@ -137,6 +111,8 @@ def main() -> None:
         run_phase4_export(args)
     elif args.command == "investigate":
         run_investigate_cli(args)
+    elif args.command == "experiment":
+        run_experiment_cli(args)
     elif args.command == "phase7":
         run_phase7_cli(args)
 

@@ -76,6 +76,7 @@ def finalize_investigation_run(
             "root_cause_hypothesis": bool(hypo),
             "candidate_patch": bool(diff),
         },
+        "iterations": int(final_state.get("iterations") or 0),
         "budget_final": dict(budget),
         "budget_caps": _budget_caps(profile),
         "ledger_path": _rel(ledger_path, project_root),

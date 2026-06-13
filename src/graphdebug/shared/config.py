@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -11,32 +10,18 @@ from typing import Any
 import yaml
 from dotenv import load_dotenv
 
+from graphdebug.shared.config_load_helpers import (
+    deep_merge,
+    project_root_from_here,
+    require_keys,
+)
+
 REQUIRED_YAML_SECTIONS = ("llm", "gatekeeper", "budgets", "paths", "features", "retriever")
 REQUIRED_BUDGET_PROFILES = ("naive", "graph")
 
 
 class ConfigError(ValueError):
     """Raised when configuration files or environment are invalid or incomplete."""
-
-
-def _project_root() -> Path:
-    return Path(__file__).resolve().parents[3]
-
-
-def _deep_merge(base: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
-    out = dict(base)
-    for key, val in overlay.items():
-        if key in out and isinstance(out[key], dict) and isinstance(val, dict):
-            out[key] = _deep_merge(out[key], val)
-        else:
-            out[key] = val
-    return out
-
-
-def _require_keys(obj: Mapping[str, Any], keys: tuple[str, ...], *, where: str) -> None:
-    missing = [k for k in keys if k not in obj]
-    if missing:
-        raise ConfigError(f"Missing required keys in {where}: {', '.join(missing)}")
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,7 +59,7 @@ def load_config(
     require_api_key: bool = True,
 ) -> AppConfig:
     """Load merged YAML from ``config/<config_filename>`` and optional ``.env``."""
-    root = project_root or _project_root()
+    root = project_root or project_root_from_here()
     load_dotenv(root / env_file) if env_file else None
 
     main_path = root / "config" / config_filename
@@ -92,19 +77,20 @@ def load_config(
             local = {}
         if not isinstance(local, dict):
             raise ConfigError("config/local.yaml must be a mapping at the top level.")
-        data = _deep_merge(data, local)
+        data = deep_merge(data, local)
 
-    _require_keys(data, REQUIRED_YAML_SECTIONS, where=str(main_path))
+    require_keys(data, REQUIRED_YAML_SECTIONS, where=str(main_path), exc_cls=ConfigError)
 
     budgets_raw = data["budgets"]
-    _require_keys(budgets_raw, REQUIRED_BUDGET_PROFILES, where="budgets")
+    require_keys(budgets_raw, REQUIRED_BUDGET_PROFILES, where="budgets", exc_cls=ConfigError)
     budgets: dict[str, BudgetProfile] = {}
     for profile in REQUIRED_BUDGET_PROFILES:
         b = budgets_raw[profile]
-        _require_keys(
+        require_keys(
             b,
             ("max_tokens", "max_tool_calls", "max_files", "max_iterations"),
             where=f"budgets.{profile}",
+            exc_cls=ConfigError,
         )
         budgets[profile] = BudgetProfile(
             max_tokens=int(b["max_tokens"]),
@@ -114,18 +100,20 @@ def load_config(
         )
 
     paths_raw = data["paths"]
-    _require_keys(
+    require_keys(
         paths_raw,
         ("graphify_artifacts", "obsidian_vault", "results", "data_root", "reports"),
         where="paths",
+        exc_cls=ConfigError,
     )
     paths = {k: (root / str(v)).resolve() for k, v in paths_raw.items()}
 
     retriever_raw = data["retriever"]
-    _require_keys(
+    require_keys(
         retriever_raw,
         ("max_lines_per_file", "max_suspects_fetched"),
         where="retriever",
+        exc_cls=ConfigError,
     )
     retriever = RetrieverConfig(
         max_lines_per_file=int(retriever_raw["max_lines_per_file"]),

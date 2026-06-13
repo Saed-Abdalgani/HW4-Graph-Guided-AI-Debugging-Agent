@@ -1,10 +1,14 @@
 """CLI wiring for ``phase7``."""
 from __future__ import annotations
+
 import argparse
 import textwrap
 from pathlib import Path
+
 import pytest
+
 from graphdebug.cli_phase7 import run_phase7_cli
+
 _MIN = (
     textwrap.dedent(
         """

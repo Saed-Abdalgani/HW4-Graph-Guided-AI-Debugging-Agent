@@ -102,6 +102,18 @@ def test_graphdebug_vault_snapshot_command() -> None:
     assert "vault-snapshot:" in proc.stdout
 
 
+def test_graphdebug_experiment_help() -> None:
+    proc = subprocess.run(
+        [sys.executable, "-m", "graphdebug.cli", "experiment", "--help"],
+        check=False,
+        capture_output=True,
+        text=True,
+        cwd=str(ROOT),
+    )
+    assert proc.returncode == 0, proc.stderr
+    assert "--target-root" in proc.stdout and "experiment" in proc.stdout
+
+
 def test_graphdebug_phase4_export_command() -> None:
     proc = subprocess.run(
         [
