@@ -1,13 +1,18 @@
 """End-to-end investigation on a synthetic tree (mocked LLM, no API)."""
 from __future__ import annotations
+
 import json
 import textwrap
 from pathlib import Path
+
 from langchain_core.messages import AIMessage
+
 from graphdebug.services.agents.runner import run_investigation
 from graphdebug.services.agents.state import BugTask
 from graphdebug.services.vault.hot import render_hot
 from graphdebug.shared.config import load_config
+
+
 def _write_minimal_project(root: Path) -> BugTask:
     (root / "config").mkdir(parents=True, exist_ok=True)
     (root / "config" / "default.yaml").write_text(
@@ -103,7 +108,9 @@ def test_investigation_graph_mode_mocked(tmp_path: Path) -> None:
     cfg = load_config(project_root=tmp_path, require_api_key=False)
 
     def invoker(_role: str, _messages):  # noqa: ANN001
-        body = """```diff
+        body = """ROOT_CAUSE: foo() returned the wrong constant for the contract under test.
+
+```diff
 --- a/pkg/foo.py
 +++ b/pkg/foo.py
 @@ -1,2 +1,2 @@
@@ -144,7 +151,20 @@ def test_investigation_graph_mode_mocked(tmp_path: Path) -> None:
     assert fs.get("patch_ready") is True
     assert fs.get("verified") is True
     assert fs.get("scribed") is True
+    assert "foo()" in (fs.get("hypothesis") or "")
     assert res.ledger_path.is_file()
     text = res.ledger_path.read_text(encoding="utf-8")
     assert "fixer" in text
     assert "retriever" in text
+    assert res.manifest_path is not None and res.manifest_path.is_file()
+    assert res.experiment_arm_path is not None
+    man = json.loads(res.manifest_path.read_text(encoding="utf-8"))
+    assert man["experiment_arm"] == "graph"
+    assert man["deliverables"]["candidate_patch"] is True
+    arm_man = res.experiment_arm_path / "manifest.json"
+    assert arm_man.is_file()
+    latest = tmp_path / "results" / "experiment_arms" / "graph" / "LATEST"
+    assert latest.read_text(encoding="utf-8").strip() == res.run_id
+    hot = (tmp_path / "obsidian" / "hot.md").read_text(encoding="utf-8")
+    assert "Navigator oriented" in hot
+    assert "## Checked" in hot

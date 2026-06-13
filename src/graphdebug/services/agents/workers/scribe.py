@@ -14,6 +14,18 @@ def _slug(node_id: str) -> str:
     return node_id.replace("/", "_").replace(":", "_")[:120]
 
 
+def _checked_lines(state: AgentState) -> str:
+    lines = [
+        f"- Navigator oriented: {bool(state.get('oriented'))}",
+        f"- Investigator suspects ranked: {bool(state.get('suspects_ranked'))}",
+        f"- Retriever code fetched: {bool(state.get('code_fetched'))}",
+        f"- Fixer patch ready: {bool(state.get('patch_ready'))}",
+        f"- Verifier attempted: {bool(state.get('verification_attempted'))}",
+        f"- Verifier green: {bool(state.get('verified'))}",
+    ]
+    return "\n".join(lines)
+
+
 def run_scribe(state: AgentState, *, vault: Path, run_dir: Path) -> dict:
     if state.get("halted_reason"):
         return {}
@@ -31,6 +43,7 @@ def run_scribe(state: AgentState, *, vault: Path, run_dir: Path) -> dict:
     hypo = state.get("hypothesis", "")
     hot_updates = {
         "suspects": ranked or "(none)",
+        "checked": _checked_lines(state),
         "root_cause": hypo[:4000],
         "fix": fix_body,
         "next_action": "Await HITL to apply patch to subject, then re-run verifier.",

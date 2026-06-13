@@ -13,6 +13,7 @@ from graphdebug.services.agents.graph_app import build_investigation_graph
 from graphdebug.services.agents.result import InvestigationResult
 from graphdebug.services.agents.state import AgentState, BugTask, Mode, initial_budget_row
 from graphdebug.services.ledger.writer import LedgerWriter
+from graphdebug.services.runs.finalize import finalize_investigation_run
 from graphdebug.shared.config import AppConfig, BudgetProfile
 from graphdebug.shared.gatekeeper import Gatekeeper, build_chat_model
 
@@ -81,12 +82,24 @@ def run_investigation(
     cfg = {"configurable": {"thread_id": run_id}}
     final = graph.invoke(state0, config=cfg)
     halted = final.get("halted_reason")
+    manifest_path, arm_path = finalize_investigation_run(
+        project_root=config.project_root,
+        run_dir=run_dir,
+        bug_task=bug_task.to_dict(),
+        mode=mode,
+        profile=profile,
+        final_state=dict(final),
+        halted_reason=str(halted) if halted else None,
+        ledger_path=ledger_path,
+    )
     return InvestigationResult(
         run_id=run_id,
         mode=mode,
         ledger_path=ledger_path,
         final_state=dict(final),
         halted_reason=str(halted) if halted else None,
+        manifest_path=manifest_path,
+        experiment_arm_path=arm_path,
     )
 
 

@@ -16,6 +16,8 @@ class InvestigationResult:
     ledger_path: Path
     final_state: dict[str, Any]
     halted_reason: str | None
+    manifest_path: Path | None = None
+    experiment_arm_path: Path | None = None
 
 
 __all__ = ["InvestigationResult"]

@@ -105,6 +105,8 @@ def run_investigate_cli(args: argparse.Namespace) -> None:
         f"run_id={res.run_id}",
         f"mode={res.mode}",
         f"ledger={res.ledger_path}",
+        f"manifest={res.manifest_path}",
+        f"experiment_arm={res.experiment_arm_path}",
         f"halted={res.halted_reason!r}",
         f"verified={fs.get('verified')}",
         f"scribed={fs.get('scribed')}",

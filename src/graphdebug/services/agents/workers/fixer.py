@@ -32,8 +32,10 @@ def run_fixer(state: AgentState, *, gatekeeper: Gatekeeper) -> dict:
         code = "(no code slices — infer from symptom and test names only)"
 
     sys = (
-        "You are a senior debugger. Output a minimal unified diff (no explanations inside the "
-        "diff fence) plus a short rationale after the fence. Prefer the smallest correct change."
+        "You are a senior debugger. Write a short rationale (plain text). On its own line "
+        "write: ROOT_CAUSE: <one sentence on the underlying defect, not the symptom>. Then "
+        "output a minimal unified diff only inside a ```diff``` fence. Prefer the smallest "
+        "correct change."
     )
     user = (
         f"Symptom:\n{bug.get('symptom','')}\n\n"
@@ -46,12 +48,19 @@ def run_fixer(state: AgentState, *, gatekeeper: Gatekeeper) -> dict:
     )
     raw = msg.content if isinstance(msg.content, str) else str(msg.content)
     diff = _extract_diff(raw)
+    root_m = re.search(r"ROOT_CAUSE:\s*(.+)$", raw, re.I | re.M)
+    if root_m:
+        hypothesis = root_m.group(1).strip()
+    else:
+        fence = re.search(r"```", raw)
+        head = raw[: fence.start()] if fence else raw
+        hypothesis = " ".join(head.strip().split())[:800] or "See patch rationale / diff."
     patch = Patch(unified_diff=diff, rationale="LLM-proposed minimal fix.")
     log = [StepRecordTD(role="fixer", action="propose_patch", detail=diff[:2000])]
     return {
         "patch": patch_to_td(patch),
         "patch_ready": True,
-        "hypothesis": "See patch rationale / diff headers.",
+        "hypothesis": hypothesis,
         "iterations": it + 1,
         "log": log,
     }

@@ -410,14 +410,18 @@ unit tests.**
 - [ ] **T6.1** (P0) Run `investigate --mode graph` on the real bug; capture full run.
   - **Refs**: FR-A2, RQ5, RQ6. **Deps**: T5.12, T1.7.
   - **DoD**: `InvestigationResult` produced; `results/<run_id>/ledger.jsonl` populated.
+  - **Automation**: `manifest.json`, `run.log`, and `reports/PHASE6_RUNS.md` document layout; archive under `results/experiment_arms/graph/`.
 - [ ] **T6.2** (P0) Confirm the agent reached a concrete **root-cause hypothesis** (not just
   the symptom) and a candidate patch — within budget caps.
   - **⚠ Critical**: if the agent stalls or loops, do **not** keep re-running blindly (burns
     tokens). Inspect routing/ledger, fix the workflow, then re-run once. Record iterations.
-- [ ] **T6.3** (P1) Scribe updates `hot.md`: suspects checked, root cause, proposed fix, next.
+  - **Automation**: fixer prompt requests `ROOT_CAUSE:` line; manifest `deliverables` flags hypothesis/patch presence.
+- [/] **T6.3** (P1) Scribe updates `hot.md`: suspects checked, root cause, proposed fix, next.
   - **Refs**: FR-O2. **DoD**: `hot.md` matches the run outcome.
-- [ ] **T6.4** (P1) Archive the run log + ledger for the token comparison (Phase 8).
+  - **Automation**: scribe fills **Checked** (worker flags) + suspects + root_cause + fix + next_action.
+- [x] **T6.4** (P1) Archive the run log + ledger for the token comparison (Phase 8).
   - **⚠ Critical**: tag this run clearly as the **graph arm** to avoid mixing it with naive.
+  - **DoD**: `results/experiment_arms/graph/<run_id>/` mirrors ledger + manifest (+ run.log); `LATEST` pointer file.
 
 **Phase 6 DoD**: a documented root-cause hypothesis + candidate patch, produced under caps,
 with a saved ledger tagged as the graph arm.
