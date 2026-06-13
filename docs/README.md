@@ -8,7 +8,9 @@ Canonical sources for the three core planning files live at the **repository roo
 
 Edit those root files; treat anything under `docs/` that mirrors them as convenience copies unless explicitly noted otherwise.
 
-Mechanism-specific PRDs (expanded in later phases):
+Mechanism-specific PRDs (Phase 5–8; expanded in Phase 10):
 
 - [`PRD_multiagent.md`](./PRD_multiagent.md)
 - [`PRD_token_ledger.md`](./PRD_token_ledger.md)
+
+Final audit verdict (Phase 10 checklist): [`../reports/READINESS_VERDICT.md`](../reports/READINESS_VERDICT.md)

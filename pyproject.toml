@@ -2,6 +2,8 @@
 name = "graphdebug"
 version = "0.1.0"
 description = "HW4 graph-guided multi-agent debugging agent (graphdebug)"
+readme = "README.md"
+license = { file = "LICENSE" }
 authors = [
     { name = "Saed-Abdalgani", email = "Saed-Abdalgani@users.noreply.github.com" }
 ]

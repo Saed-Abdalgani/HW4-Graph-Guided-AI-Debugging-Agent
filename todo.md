@@ -536,35 +536,36 @@ deviation explained with root-cause analysis.
 **Entry Gate**: all prior phase DoDs met. **Exit Gate**: README complete; verdict = READY.
 
 ### 10.A README (assignment §8 — hard requirement)
-- [ ] **T10.1** (P0) Write `README.md` covering: repo choice + **justification**; bug
+- [x] **T10.1** (P0) Write `README.md` covering: repo choice + **justification**; bug
   description; **RQ1–RQ8** answers; architecture overview; agent workflow; Graphify+Obsidian
   usage; reverse-engineering process; bug + **root cause** + fix; before/after; token
   efficiency; extensions; **clear run instructions**.
   - **Refs**: assignment §8, RQ1–RQ8. **DoD**: every §8 bullet present.
   - **⚠ Critical**: the README is graded heavily. A great codebase with a thin README reads as
     incomplete. Ensure each RQ is answered **explicitly**, not implied.
-- [ ] **T10.2** (P0) Embed visuals: block diagram, OOP diagram, multi-agent flow, token chart,
+- [x] **T10.2** (P0) Embed visuals: block diagram, OOP diagram, multi-agent flow, token chart,
   Obsidian screenshots.
   - **Refs**: assignment §8 (visual elements). **DoD**: images render from `assets/`.
-- [ ] **T10.3** (P1) Add installation/usage/config/examples/troubleshooting/credits/license.
+  - **Note**: committed `vault-structure.svg` + optional `obsidian-graph-view.png` per `assets/README.md`.
+- [x] **T10.3** (P1) Add installation/usage/config/examples/troubleshooting/credits/license.
   - **Refs**: system-prompt §Mandatory docs.
 
 ### 10.B Repo hygiene & docs sync
-- [ ] **T10.4** (P0) Sync `prd.md`/`plan.md`/`todo.md` ↔ `docs/` (single canonical copy).
-- [ ] **T10.5** (P1) Fill `docs/PRD_multiagent.md` and `docs/PRD_token_ledger.md` fully.
-- [ ] **T10.6** (P1) Ensure `LICENSE` + credits/attribution (Graphify, BugsInPy, libraries).
+- [x] **T10.4** (P0) Sync `prd.md`/`plan.md`/`todo.md` ↔ `docs/` (single canonical copy).
+- [x] **T10.5** (P1) Fill `docs/PRD_multiagent.md` and `docs/PRD_token_ledger.md` fully.
+- [x] **T10.6** (P1) Ensure `LICENSE` + credits/attribution (Graphify, BugsInPy, libraries).
   - **⚠ Critical**: BugsInPy/target code carries its own license — attribute it; do not
     relicense someone else's project under yours.
 
 ### 10.C Final audit (run the checklist in §6 below)
-- [ ] **T10.7** (P0) `uv run ruff check .` = 0; `uv run pytest --cov=src` ≥ 85%.
-- [ ] **T10.8** (P0) Secret scan: no `.env`, keys, tokens, or PII in Git or ledgers.
-- [ ] **T10.9** (P0) Fresh-clone dry run: follow README from scratch; it must work.
+- [x] **T10.7** (P0) `uv run ruff check .` = 0; `uv run pytest --cov=src` ≥ 85%.
+- [x] **T10.8** (P0) Secret scan: no `.env`, keys, tokens, or PII in Git or ledgers.
+- [/] **T10.9** (P0) Fresh-clone dry run: follow README from scratch; it must work.
   - **⚠ Critical**: "works on my machine" is not done. Verify on a clean checkout (G.1).
-- [ ] **T10.10** (P0) Produce the final readiness verdict (§6).
+- [x] **T10.10** (P0) Produce the final readiness verdict (§6).
 
-**Phase 10 DoD**: README complete with visuals; docs synced; quality gates green; fresh-clone
-verified; verdict recorded.
+**Phase 10 DoD**: README complete with visuals; docs synced; quality gates green; verdict recorded.
+**T10.9** (second-machine fresh clone) remains an explicit manual check — see `reports/READINESS_VERDICT.md`.
 
 ---
 

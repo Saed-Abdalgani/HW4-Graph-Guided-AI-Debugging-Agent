@@ -13,7 +13,7 @@
 | Type | Academic assignment (pairs) + production-quality engineering |
 | Owners | _Pair: <member A>, <member B>_ |
 | Status | DRAFT → REVIEW → APPROVED |
-| Related docs | `plan.md`, `docs/TODO.md`, `docs/PRD_multiagent.md`, `docs/PRD_token_ledger.md`, `README.md` |
+| Related docs | `plan.md`, `todo.md`, `docs/PRD_multiagent.md`, `docs/PRD_token_ledger.md`, `README.md` |
 | Source of truth | This file for scope/acceptance; `plan.md` for architecture |
 
 ---

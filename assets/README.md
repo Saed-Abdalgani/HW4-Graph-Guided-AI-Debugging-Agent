@@ -7,6 +7,10 @@
   `uv run graphdebug phase4-export`.
 - **`oop.png`** / **`oop.mmd`** — class-structure slice (inherits / contains / uses / method).
 
+## Vault structure (Phase 10 — default visual)
+
+- **`vault-structure.svg`** — small inline diagram of `index.md` / `hot.md` / reports / generated pages (committed so README always has a visual).
+
 ## Obsidian graph view (T3.7)
 
 Add a **screenshot of your Obsidian graph view** (local graph or global graph) for the root `README.md` as:
